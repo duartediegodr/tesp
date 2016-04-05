@@ -54,6 +54,7 @@ public class Tramitacao {
 	@Max(100)
 	@Column (name="tipo_decisao",length=100, nullable=false)
 	private String tipoDecisao;
+	// testes commit
 
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
