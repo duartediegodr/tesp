@@ -1,4 +1,4 @@
-package br.unibh.escola.entidades;
+package br.unibh.seguros.entidades;
 
 import java.util.Date;
 
@@ -10,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
 
-import br.unibh.escola.util.CharacterToBooleanUtil;
+import br.unibh.seguros.util.CharacterToBooleanUtil;
 
 @Entity
 @Table(name="tb_questionario")
@@ -30,10 +31,12 @@ public class Questionario {
 	@Column(name="utiliza_remedio_controlado", nullable=false)
 	private Character utilizaRemedioControlado;
 	
+	@Past
 	@Column(name="data_ultima_internacao")
 	@Temporal(TemporalType.DATE)
 	private Date dataUltimaInternacao;
 	
+	@Past
 	@Column(name="data_ultima_consulta_medica")
 	@Temporal(TemporalType.DATE)
 	private Date dataUltimaConsultaMedica;

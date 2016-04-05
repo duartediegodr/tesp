@@ -1,4 +1,4 @@
-package br.unibh.escola.entidades;
+package br.unibh.seguros.entidades;
 
 import java.util.Collection;
 
@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_setor")
@@ -19,7 +23,10 @@ public class Setor {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*")
+	@Size(min=3,max=150)
 	@Column (length=150, nullable=false,unique=true)
 	private String nome;
 	
@@ -32,6 +39,9 @@ public class Setor {
 	
 	@OneToMany(mappedBy ="setor", fetch=FetchType.LAZY)
 	private Collection<Usuario> mebros;
+	
+	@OneToMany(mappedBy ="setorResponsavel", fetch=FetchType.LAZY)
+	private Collection<Tramitacao> tramitacoes;
 	
 	public Long getId() {
 		return id;
@@ -62,5 +72,11 @@ public class Setor {
 	}
 	public void setSetoresInferiores(Collection<Setor> setoresInferiores) {
 		this.setoresInferiores = setoresInferiores;
+	}
+	public Collection<Tramitacao> getTramitacoes() {
+		return tramitacoes;
+	}
+	public void setTramitacoes(Collection<Tramitacao> tramitacoes) {
+		this.tramitacoes = tramitacoes;
 	}
 }
