@@ -1,4 +1,4 @@
-package br.unibh.escola.entidades;
+package br.unibh.seguros.entidades;
 
 import java.io.File;
 import java.util.Date;
@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_tramitacao")
@@ -23,6 +27,9 @@ public class Tramitacao {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(30)
 	@Column (name="etapa_processo",length=30, nullable=false)
 	private String etapaProcesso;
 	
@@ -30,15 +37,27 @@ public class Tramitacao {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataHora;
 
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(50)
 	@Column (name="situacao_inicial",length=50, nullable=false)
 	private String situacaoInicial;
 
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(50)
 	@Column (name="situacao_final",length=50, nullable=false)
 	private String situacaoFinal;
 
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(100)
 	@Column (name="tipo_decisao",length=100, nullable=false)
 	private String tipoDecisao;
 
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(4000)
 	@Column (columnDefinition="TEXT(4000)", nullable=false)
 	private String comentario;
 

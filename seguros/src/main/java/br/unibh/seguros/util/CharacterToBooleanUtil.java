@@ -1,4 +1,4 @@
-package br.unibh.escola.util;
+package br.unibh.seguros.util;
 
 public class CharacterToBooleanUtil {
 	

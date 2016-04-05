@@ -1,4 +1,4 @@
-package br.unibh.escola.entidades;
+package br.unibh.seguros.entidades;
 
 import java.util.Collection;
 import java.util.Date;
@@ -6,17 +6,24 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_proponente")@PrimaryKeyJoinColumn
 public class Proponente extends PessoaFisica{
 	
+	@NotBlank
+	@Pattern(regexp="[0-9]*",message="Deverá ter apenas números")
+	@Size(min=5,max=8)
 	@Column (columnDefinition="CHAR(8)", nullable=false,unique=true)
 	private String matricula;
 	
@@ -24,9 +31,15 @@ public class Proponente extends PessoaFisica{
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro;
 	
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(30)
 	@Column (name="situacao_cadastro", nullable=false,length=30)
 	private String situacaoCadastro;
 	
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(30)
 	@Column (nullable=false,length=30)
 	private String status;
 	
@@ -39,8 +52,8 @@ public class Proponente extends PessoaFisica{
 	@OneToMany(mappedBy="proponente",fetch=FetchType.LAZY)
 	private Collection<Vinculo> vinculos;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	private Proposta proposta;
+	@OneToMany(mappedBy="proponente", fetch=FetchType.LAZY)
+	private Collection<Proposta> proposta;
 	
 	public Date getDataCadastro() {
 		return dataCadastro;
@@ -84,10 +97,10 @@ public class Proponente extends PessoaFisica{
 	public void setVinculos(Collection<Vinculo> vinculos) {
 		this.vinculos = vinculos;
 	}
-	public Proposta getProposta() {
+	public Collection<Proposta> getProposta() {
 		return proposta;
 	}
-	public void setProposta(Proposta proposta) {
+	public void setProposta(Collection<Proposta> proposta) {
 		this.proposta = proposta;
 	}
 }

@@ -1,4 +1,4 @@
-package br.unibh.escola.entidades;
+package br.unibh.seguros.entidades;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,6 +15,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name="tb_seguro")
@@ -23,44 +31,73 @@ public class Seguro {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
+	@Max(15)
 	@Column (name="codigo_susep",columnDefinition="CHAR(15)", nullable=false,unique=true)
 	private String codigoSusep;
 	
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(30)
 	@Column (name="tipo_segurado",length=30, nullable=false)
 	private String tipoSegurado;
 	
+	@NotNull
+	@DecimalMin("1000.0")
+	@DecimalMax("10000000.00")
 	@Column (name="valor_segurado",columnDefinition="DECIMAL(14,2)", nullable=false)
 	private BigDecimal valorSegurado;
 
+	@NotBlank
+	@Pattern(regexp="[A-Z]*",message="Deverá ter apenas Letras Maiúsculas")
+	@Max(1)
 	@Column (columnDefinition="CHAR(1)", nullable=false)
 	private String classe;
 	
+	@NotNull
 	@Column(name="data_inicio_vigencia", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date dataInicioVigencia;
 
+	@NotNull
 	@Column(name="data_termino_vigencia", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date dataTerminoVigencia;
 	
+	@NotNull
+	@Range(min=0, max=24, message="Valor deve estar entre 0 e 24")
 	@Column (name="carencia_em_meses", nullable=false)
 	private int carenciaEmMeses;
 
+	@NotBlank
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Max(30)
 	@Column (name="situacao_atual",length=30, nullable=false)
 	private String situacaoAtual;
 
+	@NotNull
+	@DecimalMin("100.0")
+	@DecimalMax("100000.00")
 	@Column (name="valor_premio",columnDefinition="DECIMAL(14,2)", nullable=false)
 	private BigDecimal valorPremio;
 
+	@NotNull
+	@Range(min=1, max=31, message="Valor deve estar entre 1 e 31")
 	@Column (name="dia_pagamento", nullable=false)
 	private int diaPagamento;
 
+	@NotBlank
+	@Max(50)
 	@Column (name="banco_pagamento",length=50, nullable=false)
 	private String bancoPagamento;
 
+	@NotBlank
+	@Max(15)
 	@Column (length=15, nullable=false)
 	private String agencia;
 
+	@NotBlank
+	@Max(15)
 	@Column (length=15, nullable=false)
 	private String conta;
 	
