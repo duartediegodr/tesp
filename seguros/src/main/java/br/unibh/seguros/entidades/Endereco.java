@@ -28,7 +28,7 @@ public class Endereco {
 	@Column(length=30, nullable=false)
 	private String tipo;
 	
-	@Column(columnDefinition="CHAR(8)", nullable=false)
+	@Column(columnDefinition="CHAR(9)", nullable=false)
 	private String cep;
 	
 	@NotBlank
