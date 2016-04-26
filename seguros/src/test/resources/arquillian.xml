@@ -15,7 +15,11 @@
          <property name="executionType">REMOTE</property>
       </protocol>
       <configuration>
-         <property name="jbossHome">/path/to/jboss/as</property>
+         <property name="jbossHome">C:\UNIBH\TESP\wildfly-10.0.0.Final</property>
+         <property name="serverConfig">standalone.xml</property>
+         <property name="outputToConsole">true</property>
+         <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100</property>
+         <property name="managementPort">10090</property>
       </configuration>
    </container>
 

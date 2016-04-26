@@ -67,6 +67,23 @@ public class Usuario {
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Setor setor;
 	
+	public Usuario() {
+		super();
+	}
+
+	public Usuario(String nome, String login, String senha,  String perfil, String cargo, String email,
+			Date dataCadastro, Setor setor) {
+		super();
+		this.login = login;
+		this.senha = senha;
+		this.nome = nome;
+		this.perfil = perfil;
+		this.cargo = cargo;
+		this.email = email;
+		this.dataCadastro = dataCadastro;
+		this.setor = setor;
+	}
+	
 	public Long getId() {
 		return id;
 	}

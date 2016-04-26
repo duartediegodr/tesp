@@ -25,7 +25,7 @@ public class Setor {
 	private Long id;
 
 	@NotBlank
-	@Pattern(regexp="[A-zÀ-ú ]*")
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Favor fornecer apenas letras")
 	@Size(min=3,max=150)
 	@Column (length=150, nullable=false,unique=true)
 	private String nome;

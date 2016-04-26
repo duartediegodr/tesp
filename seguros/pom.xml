@@ -45,6 +45,13 @@
             <type>pom</type>
             <scope>import</scope>
          </dependency>
+         <dependency>
+         	<groupId>org.jboss.arquillian</groupId>
+         	<artifactId>arquillian-bom</artifactId>
+         	<version>1.1.11.Final</version>
+         	<type>pom</type>
+         	<scope>import</scope>
+         </dependency>
       </dependencies>
    </dependencyManagement>
 
@@ -124,7 +131,7 @@
       <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
-         <version>4.10</version>
+         <version>4.11</version>
          <scope>test</scope>
       </dependency>
 
@@ -134,10 +141,13 @@
       <dependency>
          <groupId>org.jboss.arquillian.junit</groupId>
          <artifactId>arquillian-junit-container</artifactId>
-         <version>1.0.0.CR4</version>
          <scope>test</scope>
       </dependency>
-
+      <dependency>
+		<groupId>javax.transaction</groupId>
+		<artifactId>jta</artifactId>
+		<version>1.1</version>
+      </dependency>
    </dependencies>
 
    <build>
@@ -285,12 +295,12 @@
          <!-- An optional Arquillian testing profile that executes tests 
             in a remote JBoss AS instance -->
          <!-- Run with: mvn clean test -Parq-jbossas-remote -->
-         <id>arq-jbossas-remote</id>
+         <id>arq-wildfly-remote</id>
          <dependencies>
             <dependency>
-               <groupId>org.jboss.as</groupId>
-               <artifactId>jboss-as-arquillian-container-remote</artifactId>
-               <version>7.0.2.Final</version>
+               <groupId>org.wildfly.arquillian</groupId>
+               <artifactId>wildfly-arquillian-container-remote</artifactId>
+               <version>1.1.0.Beta2</version>
                <scope>test</scope>
             </dependency>
          </dependencies>
