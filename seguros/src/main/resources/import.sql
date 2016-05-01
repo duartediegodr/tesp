@@ -1,5 +1,117 @@
 -- You can use this file to load seed data into the database using SQL statements
 insert into Member (id, name, email, phone_number) values (0, 'John Smith', 'john.smith@mailinator.com', '2125551212') 
+
+--____________________________________Imports AIA___________________________________________________________________________________
+
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (1,"IS","Montereale");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (2,"RR","Lakeshore");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (3,"IP","Gdańsk");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (4,"DU","Largs");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (5,"YU","Torgny");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (6,"XG","Owen Sound");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (7,"KW","Montresta");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (8,"MI","Nanterre");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (9,"UJ","Sterling Heights");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (10,"KL","Hameln");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (11,"HI","Port Pirie");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (12,"JU","Pozantı");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (13,"MH","Chetwynd");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (14,"FI","Saint-Médard-en-Jalles");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (15,"RP","Maria");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (16,"OR","Saint-Honor�");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (17,"KM","Idaho Falls");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (18,"AL","Forst");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (19,"BC","Erli");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (20,"WU","Llanquihue");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (21,"DL","Sombreffe");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (22,"XZ","Tiverton");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (23,"BQ","Valparai");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (24,"TU","Mangalore");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (25,"OF","Austin");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (26,"RZ","Cisano sul Neva");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (27,"UE","Nelson");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (28,"TS","Bridgeport");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (29,"UB","Houthalen");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (30,"MG","Darlington");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (31,"XU","Annapolis");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (32,"GJ","Comblain-au-Pont");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (33,"OY","Pulderbos");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (34,"PG","Bhatpara");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (35,"UA","Orta San Giulio");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (36,"EK","Oldenburg");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (37,"CM","Lives-sur-Meuse");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (38,"OL","Bingen");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (39,"XB","Sonipat");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (40,"BM","Muzaffarpur");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (41,"HK","Sauvenire");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (42,"SS","Luzzara");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (43,"WS","Juazeiro do Norte");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (44,"AT","Huntly");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (45,"VR","Borno");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (46,"AY","Junagadh");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (47,"SY","Bolano");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (48,"IO","Lint");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (49,"QL","Sint-Pieters-Kapelle");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (50,"TF","Penna San Giovanni");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (51,"KP","Kearney");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (52,"KS","Kortessem");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (53,"TR","Castel Maggiore");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (54,"BT","Orhangazi");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (55,"FX","Pontey");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (56,"PR","Bressoux");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (57,"GY","Castelvetere in Val Fortore");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (58,"NQ","Santa Coloma de Gramenet");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (59,"IM","Schwechat");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (60,"LV","Busso");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (61,"AN","Nizip");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (62,"RC","Chelsea");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (63,"DI","Tambaram");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (64,"IZ","Robelmont");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (65,"ZG","Francavilla in Sinni");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (66,"LN","Patalillo");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (67,"JE","Duque de Caxias");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (68,"EB","Pugwash");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (69,"OV","Adria");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (70,"WI","Sant'Agata sul Santerno");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (71,"DN","Munich");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (72,"ZW","Monguelfo-Tesido/Welsberg-Taisten");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (73,"RZ","Nodebais");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (74,"OY","Petrópolis");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (75,"RN","Port Moody");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (76,"XP","Missoula");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (77,"NC","Waterbury");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (78,"HC","El Tabo");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (79,"XE","Borchtlombeek");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (80,"ME","Itter");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (81,"IC","Verdun");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (82,"CZ","Sint-Martens-Lennik");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (83,"RF","Navidad");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (84,"NX","Noida");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (85,"BY","Saint-Marcel");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (86,"XG","Denver");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (87,"JG","Malloa");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (88,"FJ","Fauglia");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (89,"LT","Rutigliano");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (90,"NP","Meetkerke");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (91,"QW","Orangeville");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (92,"TL","Saint-Eug�ne-de-Ladri�re");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (93,"QL","Amritsar");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (94,"WH","Murdochville");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (95,"PM","Gurgaon");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (96,"CD","Igboho");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (97,"JK","Eluru");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (98,"GX","Shrewsbury");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (99,"SX","Roxboro");
+INSERT INTO `tb_cidade` (`id`,`estado`,`cidade`) VALUES (100,"EG","Valleyview");
+
+
+
+
+
+
+
+
+
 -- _________________________________________________________________________________________________________________________________
 
 --INSERT INTO `tb_pessoa_fisica` (`id`,`cpf`,`data_nascimento`,`email`,`idade`,`nome`,`telefone_celular`,`telefone_comercial`,`telefone_residencial`) VALUES (1,"81662665790","1961-12-30","sollicitudin.commodo.ipsum@congueInscelerisque.net",69,"Hector Matthews","(16) 9263-0489","(85) 3623-9170","(72) 6553-3258");

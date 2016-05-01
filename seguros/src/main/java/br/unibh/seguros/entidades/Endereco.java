@@ -53,7 +53,7 @@ public class Endereco {
 	private String complemento;
 	
 	@NotBlank
-	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá conter apenas Letras e Espaço")
 	@Max(100)
 	@Column(length=100, nullable=false)
 	private String cidade;

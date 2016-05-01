@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -20,8 +21,9 @@ import br.unibh.seguros.util.CharacterToBooleanUtil;
 
 @Entity
 @Table(name="tb_dependente")@PrimaryKeyJoinColumn
-public class Dependente extends PessoaFisica {
-	
+public class Dependente extends PessoaFisica implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
 	@Max(30)
