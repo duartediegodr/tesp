@@ -1,6 +1,8 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +12,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -20,17 +22,18 @@ import br.unibh.seguros.util.CharacterToBooleanUtil;
 
 @Entity
 @Table(name="tb_dependente")@PrimaryKeyJoinColumn
-public class Dependente extends PessoaFisica {
-	
+public class Dependente extends PessoaFisica implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column (name="grau_parentesco",length=30, nullable=false)
 	private String grauParentesco;
 	
 	@NotNull
-	@DecimalMin("0.0")
-	@DecimalMax("100.0")
+	@DecimalMin(value="0.0",message="Valor deve ser menor ou igual a 100.0 e maior ou igual que 0.0")
+	@DecimalMax(value="100.0",message="Valor deve ser menor ou igual a 100.0 e maior ou igual que 0.0")
 	@Column (name="percentual_beneficio",columnDefinition="DECIMAL(30)", nullable=false)
 	private BigDecimal percentualBeneficio;
 	
@@ -40,6 +43,23 @@ public class Dependente extends PessoaFisica {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Proponente proponente;
 	
+	public Dependente() {
+		super();
+	}
+	public Dependente(String nome, String cpf, int idade, String telefoneResidencial, 
+			String grauParentesco, BigDecimal percentualBeneficio, Boolean dependenteIR,
+			Date dataNascimento, Proponente proponente) {
+		super();
+		this.setNome(nome);
+		this.setCpf(cpf);
+		this.setIdade(idade);
+		this.setTelefoneResidencial(telefoneResidencial);
+		this.setDataNascimento(dataNascimento);
+		this.grauParentesco = grauParentesco;
+		this.percentualBeneficio = percentualBeneficio;
+		this.setDependenteIR(dependenteIR);
+		this.proponente = proponente;
+	}
 	public String getGrauParentesco() {
 		return grauParentesco;
 	}

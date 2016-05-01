@@ -1,5 +1,7 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,23 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_endereco")
-public class Endereco {
-	
+public class Endereco implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column(length=30, nullable=false)
 	private String tipo;
 	
@@ -33,34 +35,34 @@ public class Endereco {
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column(name="tipo_logradouro", length=30, nullable=false)
 	private String tipoLogradouro;
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(150)
+	@Size(max=150)
 	@Column(length=150, nullable=false)
 	private String logradouro;
 	
 	@NotBlank
-	@Max(30)
+	@Size(max=30)
 	@Column(length=30, nullable=false)
 	private String numero;
 	
-	@Max(100)
+	@Size(max=100)
 	@Column(length=100)
 	private String complemento;
 	
 	@NotBlank
-	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(100)
+	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá conter apenas Letras e Espaço")
+	@Size(max=100)
 	@Column(length=100, nullable=false)
 	private String cidade;
 	
 	@NotBlank
 	@Pattern(regexp="[A-Z]*",message="Deverá ter apenas letras Maiúsculas")
-	@Max(2)	@Min(2)
+	@Size(max=2,min=2)
 	@Column(columnDefinition="CHAR(2)", nullable=false)
 	private String estado;
 	

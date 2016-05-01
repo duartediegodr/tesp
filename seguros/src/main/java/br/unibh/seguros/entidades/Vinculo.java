@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,17 +16,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_vinculo")
-public class Vinculo {
+public class Vinculo implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -33,13 +37,13 @@ public class Vinculo {
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)	
+	@Size(max=30)	
 	@Column(name="tipo_vinculo", length=30, nullable=false)
 	private String tipoVinculo;
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(120)
+	@Size(max=120)
 	@Column(length=120, nullable=false)
 	private String empresa;
 	
@@ -56,7 +60,7 @@ public class Vinculo {
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(100)
+	@Size(max=100)
 	@Column(length=100, nullable=false)
 	private String cargo;
 	
@@ -68,7 +72,7 @@ public class Vinculo {
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(100)
+	@Size(max=100)
 	@Column(name="pessoa_referencia",length=100, nullable=false)
 	private String pessoaReferencia;
 	
@@ -79,7 +83,7 @@ public class Vinculo {
 	
 	@NotBlank
 	@Email
-	@Max(100)
+	@Size(max=100)
 	@Column(name="email_referencia",length=100)
 	private String emailReferencia;
 	

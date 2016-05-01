@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,7 +12,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -19,8 +19,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_proponente")@PrimaryKeyJoinColumn
-public class Proponente extends PessoaFisica{
-	
+public class Proponente extends PessoaFisica implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@NotBlank
 	@Pattern(regexp="[0-9]*",message="Deverá ter apenas números")
 	@Size(min=5,max=8)
@@ -32,14 +33,14 @@ public class Proponente extends PessoaFisica{
 	private Date dataCadastro;
 	
 	@NotBlank
+	@Size(max=30)
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
 	@Column (name="situacao_cadastro", nullable=false,length=30)
 	private String situacaoCadastro;
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column (nullable=false,length=30)
 	private String status;
 	
@@ -55,6 +56,25 @@ public class Proponente extends PessoaFisica{
 	@OneToMany(mappedBy="proponente", fetch=FetchType.LAZY)
 	private Collection<Proposta> proposta;
 	
+	public Proponente() {
+		super();
+	}
+	public Proponente(String nome, String cpf, String telefoneResidencial,
+			 int idade, Date dataNascimento,String matricula, Date dataCadastro, String situacaoCadastro, String status,
+			Collection<Endereco> enderecos, Collection<Dependente> dependentes, Collection<Vinculo> vinculos,
+			Collection<Proposta> proposta) {
+		
+		super(nome, cpf, null, telefoneResidencial, null, null, idade, dataNascimento);
+
+		this.matricula = matricula;
+		this.dataCadastro = dataCadastro;
+		this.situacaoCadastro = situacaoCadastro;
+		this.status = status;
+		this.enderecos = enderecos;
+		this.dependentes = dependentes;
+		this.vinculos = vinculos;
+		this.proposta = proposta;
+	}
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}

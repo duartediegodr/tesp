@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ import br.unibh.seguros.util.CharacterToBooleanUtil;
 
 @Entity
 @Table(name="tb_questionario")
-public class Questionario {
+public class Questionario implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

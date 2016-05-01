@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,28 +18,30 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name="tb_seguro")
-public class Seguro {
+public class Seguro implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	@Max(15)
+	@Size(max=15)
 	@Column (name="codigo_susep",columnDefinition="CHAR(15)", nullable=false,unique=true)
 	private String codigoSusep;
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column (name="tipo_segurado",length=30, nullable=false)
 	private String tipoSegurado;
 	
@@ -50,7 +53,7 @@ public class Seguro {
 
 	@NotBlank
 	@Pattern(regexp="[A-Z]*",message="Deverá ter apenas Letras Maiúsculas")
-	@Max(1)
+	@Size(max=1)
 	@Column (columnDefinition="CHAR(1)", nullable=false)
 	private String classe;
 	
@@ -71,7 +74,7 @@ public class Seguro {
 
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
-	@Max(30)
+	@Size(max=30)
 	@Column (name="situacao_atual",length=30, nullable=false)
 	private String situacaoAtual;
 
@@ -87,17 +90,17 @@ public class Seguro {
 	private int diaPagamento;
 
 	@NotBlank
-	@Max(50)
+	@Size(max=50)
 	@Column (name="banco_pagamento",length=50, nullable=false)
 	private String bancoPagamento;
 
 	@NotBlank
-	@Max(15)
+	@Size(max=15)
 	@Column (length=15, nullable=false)
 	private String agencia;
 
 	@NotBlank
-	@Max(15)
+	@Size(max=15)
 	@Column (length=15, nullable=false)
 	private String conta;
 	

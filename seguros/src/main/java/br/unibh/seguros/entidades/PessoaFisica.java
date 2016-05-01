@@ -1,5 +1,6 @@
 package br.unibh.seguros.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +13,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -25,8 +25,9 @@ import org.hibernate.validator.constraints.Range;
 @Entity
 @Table(name="tb_pessoa_fisica")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class PessoaFisica {
-	
+public class PessoaFisica implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
@@ -57,7 +58,7 @@ public class PessoaFisica {
 	private String telefoneCelular;
 	
 	@Email
-	@Max(100)
+	@Size(max=100)
 	@Column (length=100)
 	private String email;
 	
@@ -70,6 +71,22 @@ public class PessoaFisica {
 	@Column (name="data_nascimento", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
+	
+	public PessoaFisica() {
+		super();
+	}
+
+	public PessoaFisica(String nome, String cpf, String telefoneComercial, String telefoneResidencial,
+			String telefoneCelular, String email, int idade, Date dataNascimento) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefoneComercial = telefoneComercial;
+		this.telefoneResidencial = telefoneResidencial;
+		this.telefoneCelular = telefoneCelular;
+		this.email = email;
+		this.idade = idade;
+		this.dataNascimento = dataNascimento;
+	}
 	
 	public Long getId() {
 		return id;
