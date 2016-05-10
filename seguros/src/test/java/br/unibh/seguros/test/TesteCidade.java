@@ -73,6 +73,7 @@ public class TesteCidade {
 		assertNotNull(aux);
 	}
 
+	@Test
 	public void teste02_inserirComErro() throws Exception {
 		log.info("============> Executando " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		
@@ -86,7 +87,7 @@ public class TesteCidade {
 		}
 	}
 	
-	
+	@Test
 	public void teste03_inserirComErro() throws Exception {
 		log.info("============> Executando " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		try {
@@ -100,6 +101,7 @@ public class TesteCidade {
 		}
 	}
 	
+	@Test
 	public void teste04_inserirComErro() throws Exception {
 		log.info("============> Executando " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		try {
@@ -152,12 +154,4 @@ public class TesteCidade {
 		return false;
 	}	
 	
-	
-	
-	
-	
-	
-	
-	
-
 }

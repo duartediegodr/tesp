@@ -19,6 +19,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -37,13 +38,13 @@ import br.unibh.seguros.entidades.Vinculo;
 import br.unibh.seguros.util.CharacterToBooleanUtil;
 import br.unibh.seguros.util.Resources;
 
-//@Ignore
+
 @RunWith(Arquillian.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteDependente {
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(WebArchive.class, "test3.war")
+		return ShrinkWrap.create(WebArchive.class, "test4.war")
 				.addClasses(Resources.class, Dependente.class, Endereco.class, PessoaFisica.class, Proponente.class,
 						Proposta.class, Questionario.class, Seguro.class, Tramitacao.class, Usuario.class,
 						Vinculo.class, Setor.class,CharacterToBooleanUtil.class)
