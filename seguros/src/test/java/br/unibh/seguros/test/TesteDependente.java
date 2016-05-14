@@ -38,7 +38,7 @@ import br.unibh.seguros.entidades.Vinculo;
 import br.unibh.seguros.util.CharacterToBooleanUtil;
 import br.unibh.seguros.util.Resources;
 
-
+@Ignore
 @RunWith(Arquillian.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteDependente {

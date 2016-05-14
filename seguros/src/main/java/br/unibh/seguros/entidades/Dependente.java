@@ -28,7 +28,7 @@ public class Dependente extends PessoaFisica implements Serializable{
 	@Version
 	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
 	private Long version;
-
+	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
 	@Size(max=30)

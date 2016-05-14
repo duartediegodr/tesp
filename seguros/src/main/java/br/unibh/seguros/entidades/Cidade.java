@@ -82,4 +82,5 @@ public class Cidade implements Serializable{
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}	
+
 }

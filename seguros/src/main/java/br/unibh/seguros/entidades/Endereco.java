@@ -60,7 +60,7 @@ public class Endereco implements Serializable{
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá conter apenas Letras e Espaço")
-	@Size(max=100)
+	@Size(max=100)	
 	@Column(length=100, nullable=false)
 	private String cidade;
 	

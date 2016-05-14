@@ -74,6 +74,7 @@ public class TesteUsuario {
 		} catch (Exception e) {
 		}
 	}
+	
 	@Test
 	public void teste01_inserirSemErro() throws Exception {
 		log.info("============> Executando " + Thread.currentThread().getStackTrace()[1].getMethodName());
