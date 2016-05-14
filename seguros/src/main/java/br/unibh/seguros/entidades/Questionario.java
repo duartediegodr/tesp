@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Past;
 
 import br.unibh.seguros.util.CharacterToBooleanUtil;
@@ -19,6 +20,9 @@ import br.unibh.seguros.util.CharacterToBooleanUtil;
 @Table(name="tb_questionario")
 public class Questionario implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -133,10 +137,32 @@ public class Questionario implements Serializable {
 	public void setPossuiDoencaContagiosa(Boolean possuiDoencaContagiosa) {
 		this.possuiDoencaContagiosa = CharacterToBooleanUtil.getCharacter(possuiDoencaContagiosa);
 	}
-	
-	
-	
-	
-	
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataUltimaConsultaMedica == null) ? 0 : dataUltimaConsultaMedica.hashCode());
+		result = prime * result + ((dataUltimaInternacao == null) ? 0 : dataUltimaInternacao.hashCode());
+		result = prime * result + ((executaAtividadeDeRisco == null) ? 0 : executaAtividadeDeRisco.hashCode());
+		result = prime * result + ((historicoCancerFamilia == null) ? 0 : historicoCancerFamilia.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((portadorMolestiaGrave == null) ? 0 : portadorMolestiaGrave.hashCode());
+		result = prime * result
+				+ ((portadorNecessidadesEspeciais == null) ? 0 : portadorNecessidadesEspeciais.hashCode());
+		result = prime * result + ((possuiDoencaContagiosa == null) ? 0 : possuiDoencaContagiosa.hashCode());
+		result = prime * result + ((possuiPlanoSaudeParticular == null) ? 0 : possuiPlanoSaudeParticular.hashCode());
+		result = prime * result + ((praticaEsportes == null) ? 0 : praticaEsportes.hashCode());
+		result = prime * result
+				+ ((seEnvolveuEmAcidenteUltimoAno == null) ? 0 : seEnvolveuEmAcidenteUltimoAno.hashCode());
+		result = prime * result + ((utilizaRemedioControlado == null) ? 0 : utilizaRemedioControlado.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 	
 }

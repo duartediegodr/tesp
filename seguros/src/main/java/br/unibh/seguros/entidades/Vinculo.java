@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -28,12 +29,14 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_vinculo")
 public class Vinculo implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
@@ -149,6 +152,30 @@ public class Vinculo implements Serializable{
 	}
 	public void setEmailReferencia(String emailReferencia) {
 		this.emailReferencia = emailReferencia;
+	}
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = prime * result + ((dataAte == null) ? 0 : dataAte.hashCode());
+		result = prime * result + ((dataDesde == null) ? 0 : dataDesde.hashCode());
+		result = prime * result + ((emailReferencia == null) ? 0 : emailReferencia.hashCode());
+		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pessoaReferencia == null) ? 0 : pessoaReferencia.hashCode());
+		result = prime * result + ((proponente == null) ? 0 : proponente.hashCode());
+		result = prime * result + ((salario == null) ? 0 : salario.hashCode());
+		result = prime * result + ((telefoneReferencia == null) ? 0 : telefoneReferencia.hashCode());
+		result = prime * result + ((tipoVinculo == null) ? 0 : tipoVinculo.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
 	}
 	
 }

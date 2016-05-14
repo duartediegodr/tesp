@@ -11,8 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -20,8 +23,15 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_setor")
+@NamedQueries({
+	@NamedQuery(name="Setor.findByName", 
+			query="select o from Setor o where o.nome like :nome")
+})
 public class Setor implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -82,4 +92,21 @@ public class Setor implements Serializable{
 	public void setTramitacoes(Collection<Tramitacao> tramitacoes) {
 		this.tramitacoes = tramitacoes;
 	}
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((setorSuperior == null) ? 0 : setorSuperior.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+	
 }

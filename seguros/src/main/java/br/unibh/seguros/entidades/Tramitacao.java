@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -25,6 +26,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_tramitacao")
 public class Tramitacao implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -57,8 +61,6 @@ public class Tramitacao implements Serializable{
 	@Size(max=100)
 	@Column (name="tipo_decisao",length=100, nullable=false)
 	private String tipoDecisao;
-
-	// testes commit
 
 
 	@NotBlank
@@ -148,12 +150,29 @@ public class Tramitacao implements Serializable{
 	public void setUsuarioDecisao(Usuario usuarioDecisao) {
 		this.usuarioDecisao = usuarioDecisao;
 	}
-	
-	
-	
-	
-	
-	
-	
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
+		result = prime * result + ((dataHora == null) ? 0 : dataHora.hashCode());
+		result = prime * result + ((documento == null) ? 0 : documento.hashCode());
+		result = prime * result + ((etapaProcesso == null) ? 0 : etapaProcesso.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((proposta == null) ? 0 : proposta.hashCode());
+		result = prime * result + ((setorResponsavel == null) ? 0 : setorResponsavel.hashCode());
+		result = prime * result + ((situacaoFinal == null) ? 0 : situacaoFinal.hashCode());
+		result = prime * result + ((situacaoInicial == null) ? 0 : situacaoInicial.hashCode());
+		result = prime * result + ((tipoDecisao == null) ? 0 : tipoDecisao.hashCode());
+		result = prime * result + ((usuarioDecisao == null) ? 0 : usuarioDecisao.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 	
 }

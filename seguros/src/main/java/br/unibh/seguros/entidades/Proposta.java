@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -30,8 +31,10 @@ import org.hibernate.validator.constraints.Range;
 @Entity
 @Table(name="tb_proposta")
 public class Proposta implements Serializable{
-	
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 
 	@Id
@@ -220,8 +223,35 @@ public class Proposta implements Serializable{
 	public void setTramitacoes(Collection<Tramitacao> tramitacoes) {
 		this.tramitacoes = tramitacoes;
 	}
-	
-	
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
+		result = prime * result + ((bancoPagamento == null) ? 0 : bancoPagamento.hashCode());
+		result = prime * result + carenciaEmMeses;
+		result = prime * result + ((classe == null) ? 0 : classe.hashCode());
+		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((dataInicioVigencia == null) ? 0 : dataInicioVigencia.hashCode());
+		result = prime * result + ((dataTerminoVigencia == null) ? 0 : dataTerminoVigencia.hashCode());
+		result = prime * result + diaPagamento;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((proponente == null) ? 0 : proponente.hashCode());
+		result = prime * result + ((questionario == null) ? 0 : questionario.hashCode());
+		result = prime * result + ((situacaoAtual == null) ? 0 : situacaoAtual.hashCode());
+		result = prime * result + ((tipoSegurado == null) ? 0 : tipoSegurado.hashCode());
+		result = prime * result + ((valorPremio == null) ? 0 : valorPremio.hashCode());
+		result = prime * result + ((valorSegurado == null) ? 0 : valorSegurado.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
 	
 	
 }

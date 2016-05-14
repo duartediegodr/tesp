@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -23,6 +24,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_usuario")
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -141,4 +145,30 @@ public class Usuario implements Serializable{
 	public void setSetor(Setor setor) {
 		this.setor = setor;
 	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + ((setor == null) ? 0 : setor.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
 }

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.*;
 
 import org.hibernate.validator.constraints.*;
@@ -16,6 +17,9 @@ import org.hibernate.validator.constraints.*;
 @Table(name="tb_cidade")
 public class Cidade implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -62,5 +66,20 @@ public class Cidade implements Serializable{
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}	
 }

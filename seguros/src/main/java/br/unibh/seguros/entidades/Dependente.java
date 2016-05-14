@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,9 @@ import br.unibh.seguros.util.CharacterToBooleanUtil;
 @Table(name="tb_dependente")@PrimaryKeyJoinColumn
 public class Dependente extends PessoaFisica implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Version
+	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
+	private Long version;
 
 	@NotBlank
 	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
@@ -84,4 +88,22 @@ public class Dependente extends PessoaFisica implements Serializable{
 	public void setProponente(Proponente proponente) {
 		this.proponente = proponente;
 	}
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((dependenteIR == null) ? 0 : dependenteIR.hashCode());
+		result = prime * result + ((grauParentesco == null) ? 0 : grauParentesco.hashCode());
+		result = prime * result + ((percentualBeneficio == null) ? 0 : percentualBeneficio.hashCode());
+		result = prime * result + ((proponente == null) ? 0 : proponente.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+	
 }
