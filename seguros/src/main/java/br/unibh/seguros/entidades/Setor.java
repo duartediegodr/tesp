@@ -43,6 +43,7 @@ public class Setor implements Serializable{
 	@Column (length=150, nullable=false,unique=true)
 	private String nome;
 	
+	
 	@OneToMany(mappedBy="setorSuperior", fetch=FetchType.LAZY)
 	private Collection<Setor> setoresInferiores;
 	
