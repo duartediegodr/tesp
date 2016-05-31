@@ -22,9 +22,6 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_proponente")@PrimaryKeyJoinColumn
 public class Proponente extends PessoaFisica implements Serializable{
 	private static final long serialVersionUID = 1L;
-	@Version
-	@Column(columnDefinition="bigint NOT NULL DEFAULT 0")
-	private Long version;
 
 	@NotBlank
 	@Pattern(regexp="[0-9]*",message="Deverá ter apenas números")
@@ -127,12 +124,6 @@ public class Proponente extends PessoaFisica implements Serializable{
 	public void setProposta(Collection<Proposta> proposta) {
 		this.proposta = proposta;
 	}
-	public Long getVersion() {
-		return version;
-	}
-	public void setVersion(Long version) {
-		this.version = version;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -141,7 +132,6 @@ public class Proponente extends PessoaFisica implements Serializable{
 		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
 		result = prime * result + ((situacaoCadastro == null) ? 0 : situacaoCadastro.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
 	

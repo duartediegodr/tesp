@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{setormb.setor != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Setores"
+						style="font-size:18px;fontweight:
+bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">
+						<p:outputLabel value="Nome " />
+						<p:inputText id="nome" value="#{setormb.setor.nome}" size="50" />
+						<p:message for="nome" errorClass="invalid" />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{setormb.gravar}"
+						value="Gravar" update="cadastro" ajax="false" />
+					<p:commandButton id="cancelar" action="#{setormb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{setormb.setor == null}">
+			<h:outputText value="Lista de Setores"
+				style="font-size:18px;fontweight:
+bold" />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Nome:" />
+					<p:inputText id="nomeArg" value="#{setormb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{setormb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{setormb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty setormb.lista}">
+				<h:outputText value="Nenhum setor existe" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="setor" value="#{setormb.lista}"
+					rendered="#{not empty setormb.lista}"
+					onrowclick="selectRow('#{setor.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{setor.id}">
+						<div align="center">
+							<h:outputText value="#{setor.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Nome" width="35%" sortBy="#{setor.nome}">
+						<h:outputText value="#{setor.nome}" />
+					</p:column>
+					<p:column headerText="Comandos" width="20%">
+						<div align="center">
+							<p:commandLink id="editar" action="#{setormb.editar(setor.id)}"
+								value="Editar" update="pesquisa" ajax="false" />
+							<h:outputText value=" " />
+							<p:commandLink id="excluir" action="#{setormb.excluir(setor.id)}"
+								value="Excluir" update="pesquisa" ajax="false" />
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
