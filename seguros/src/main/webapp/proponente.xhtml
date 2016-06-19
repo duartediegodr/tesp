@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{proponentemb.proponente != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Proponente"
+						style="font-size:18px;font-weight:bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">
+						<p:outputLabel value="Nome " />
+						<p:inputText id="nome" value="#{proponentemb.proponente.nome}" size="50" />
+						<p:message for="nome" errorClass="invalid" />
+						<p:outputLabel for="cpf" value="CPF:" />
+        				<p:inputMask id="cpf" value="#{proponentemb.proponente.cpf}" mask="99999999999"/><br />
+        				<p:outputLabel for="telefoneComercial" value="Telefone Comercial:" />
+        				<p:inputMask id="telefoneComercial" value="#{proponentemb.proponente.telefoneComercial}" mask="(99)9999-9999"/><br /><br />
+        				<p:outputLabel for="telefoneResidencial" value="Telefone Residencial: " />
+        				<p:inputMask id="telefoneResidencial" value="#{proponentemb.proponente.telefoneResidencial}" mask="(99)9999-9999"/><br /><br />
+        				<p:outputLabel for="telefoneCelular" value="Telefone Celular: " />
+        				<p:inputMask id="telefoneCelular" value="#{proponentemb.proponente.telefoneCelular}" mask="(99)99999-9999"/><br /><br />
+        				<p:outputLabel value="E-mail:  " />
+						<p:inputText id="email" value="#{proponentemb.proponente.email}" size="50" />
+						<p:message for="email" errorClass="invalid" />
+						<h:outputLabel for="idade" value="Idade: " />
+       					<p:spinner id="idade" value="#{proponentemb.proponente.idade}" /><br /><br />
+       					<p:outputLabel value="Data Nascimento: " />
+        				<p:calendar id="dataNascimento" value="#{proponentemb.proponente.dataNascimento}" effect="fold" /><br /><br />
+        				<p:outputLabel value="Matricula: " />
+						<p:inputText id="matricula" value="#{proponentemb.proponente.matricula}" size="50" />
+						<p:message for="matricula" errorClass="invalid" />
+						<p:outputLabel value="Situação Cadastro " />
+						<p:inputText id="situacaoCadastro" value="#{proponentemb.proponente.situacaoCadastro}" size="50" />
+						<p:message for="situacaoCadastro" errorClass="invalid" />
+						<p:outputLabel value="Status " />
+						<p:inputText id="status" value="#{proponentemb.proponente.status}" size="50"/>
+						<p:message for="status" errorClass="invalid" />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{proponentemb.gravar}"
+						value="Gravar" update="cadastro" ajax="false" />
+					<p:commandButton id="cancelar" action="#{proponentemb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{proponentemb.proponente == null}">
+			<h:outputText value="Lista de Proponentes"
+				style="font-size:18px;font-weight:bold" />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Nome: " />
+					<p:inputText id="nomeArg" value="#{proponentemb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{proponentemb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{proponentemb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty proponentemb.lista}">
+				<h:outputText value="Nenhum Proponente existe" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="proponente" value="#{proponentemb.lista}"
+					rendered="#{not empty proponentemb.lista}"
+					onrowclick="selectRow('#{proponente.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{proponente.id}">
+						<div align="center">
+							<h:outputText value="#{proponente.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Matricula " width="35%" sortBy="#{proponente.matricula}">
+						<h:outputText value="#{proponente.matricula}" />
+					</p:column>
+					<p:column headerText="Nome " width="35%" sortBy="#{proponente.nome}">
+						<h:outputText value="#{proponente.nome}" />
+					</p:column>
+					<p:column headerText="Data Cadastro " width="35%" sortBy="#{proponente.dataCadastro}">
+						<h:outputText value="#{proponente.dataCadastro}" />
+					</p:column>
+					<p:column headerText="Situação Cadastro " width="35%" sortBy="#{proponente.situacaoCadastro}">
+						<h:outputText value="#{proponente.situacaoCadastro}" />
+					</p:column>
+					<p:column headerText="Status " width="35%" sortBy="#{proponente.status}">
+						<h:outputText value="#{proponente.status}" />
+					</p:column>
+					<p:column headerText="Comandos" width="20%">
+						<div align="center">
+							<p:commandLink id="editar" action="#{proponentemb.editar(proponente.id)}"
+								value="Editar" update="pesquisa" ajax="false" />
+							<h:outputText value=" " />
+							<p:commandLink id="excluir" action="#{proponentemb.excluir(proponente.id)}"
+								value="Excluir" update="pesquisa" ajax="false" />
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,6 +32,10 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name="tb_proposta")
+@NamedQueries({
+	@NamedQuery(name="Proposta.findByConta", 
+			query="select o from Proposta o where o.conta like :conta")
+})
 public class Proposta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Version

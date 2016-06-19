@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{seguromb.seguro != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Seguros"
+						style="font-size:18px;font-weight:bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">      				
+        				<p:outputLabel value="Codigo Susep: " />
+						<p:inputText id="codigoSusep" value="#{seguromb.seguro.codigoSusep}" size="50" />
+						<p:message for="codigoSusep" errorClass="invalid" />
+						
+						<p:outputLabel value="Tipo Segurado: " />
+						<p:inputText id="tipoSegurado" value="#{seguromb.seguro.tipoSegurado}" size="50" />
+						<p:message for="tipoSegurado" errorClass="invalid" />
+						
+						<h:outputLabel for="valorSegurado" value="Valor Segurado: " />
+						<p:inputText id="valorSegurado" value="#{seguromb.seguro.valorSegurado}" size="50" /><br /><br />
+						
+						<p:outputLabel value="Classe: " />
+						<p:inputText id="classe" value="#{seguromb.seguro.classe}" size="50" />
+						<p:message for="classe" errorClass="invalid" />
+						
+						<p:outputLabel value="Data Inicio Vigencia: " />
+        				<p:calendar id="dataInicioVigencia" value="#{seguromb.seguro.dataInicioVigencia}" size="50" effect="fold" /><br /><br />
+        				
+        				<p:outputLabel value="Data Termino Vigencia: " />
+        				<p:calendar id="dataTerminoVigencia" value="#{seguromb.seguro.dataTerminoVigencia}" size="50" effect="fold" /><br /><br />
+        				
+        				<p:outputLabel value="Carencia em meses: " />
+        				<p:inputText id="carenciaEmMeses" value="#{seguromb.seguro.carenciaEmMeses}" size="50" max="24"/><br /><br />
+        				
+        				<p:outputLabel for="situacaoAtual" value="Situacao Atual: " />
+				        <p:inputText id="situacaoAtual" value="#{seguromb.seguro.situacaoAtual}" size="50" /><br /><br />
+	
+				        <h:outputLabel for="valorPremio" value="Valor Premio: " />
+        				<p:inputText id="valorPremio" value="#{seguromb.seguro.valorPremio}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="diaPagamento" value="Dia Pagamento: " />
+        				<p:inputText id="diaPagamento" value="#{seguromb.seguro.diaPagamento}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="conta" value="Banco Pagamento: " />
+        				<p:inputText id="conta" value="#{seguromb.seguro.conta}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="agencia" value="Agência: " />
+        				<p:inputText id="agencia" value="#{seguromb.seguro.agencia}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="bancoPagamento" value="Conta: " />
+        				<p:inputText id="bancoPagamento" value="#{seguromb.seguro.bancoPagamento}" size="50" /><br /><br />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{seguromb.gravar}"
+						value="Gravar" update="cadastro" ajax="false" />
+					<p:commandButton id="cancelar" action="#{seguromb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{seguromb.seguro == null}">
+			<h:outputText value="Lista de Seguros"
+				style="font-size:18px;font-weight:bold" />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Codigo Susep: " />
+					<p:inputText id="nomeArg" value="#{seguromb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{seguromb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{seguromb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty seguromb.lista}">
+				<h:outputText value="Nenhum seguros existente" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="seguro" value="#{seguromb.lista}"
+					rendered="#{not empty seguromb.lista}"
+					onrowclick="selectRow('#{seguro.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{seguro.id}">
+						<div align="center">
+							<h:outputText value="#{seguro.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Codigo Susep" width="35%" sortBy="#{seguro.codigoSusep}">
+						<h:outputText value="#{seguro.codigoSusep}" />
+					</p:column>
+					<p:column headerText="Tipo Segurado" width="35%" sortBy="#{seguro.tipoSegurado}">
+						<h:outputText value="#{seguro.tipoSegurado}" />
+					</p:column>
+					<p:column headerText="Valor Segurado" width="35%" sortBy="#{seguro.valorSegurado}">
+						<h:outputText value="#{seguro.valorSegurado}" />
+					</p:column>
+					<p:column headerText="Classe" width="35%" sortBy="#{seguro.classe}">
+						<h:outputText value="#{seguro.classe}" />
+					</p:column>
+					<p:column headerText="Data Inicio Vigencia" width="90%" sortBy="#{seguro.dataInicioVigencia}">
+						<h:outputText value="#{seguro.dataInicioVigencia}" />
+					</p:column>
+					<p:column headerText="Data Termino Vigencia" width="35%" sortBy="#{seguro.dataTerminoVigencia}">
+						<h:outputText value="#{seguro.dataTerminoVigencia}" />
+					</p:column>
+					<p:column headerText="Carencia EmMeses" width="35%" sortBy="#{seguro.carenciaEmMeses}">
+						<h:outputText value="#{seguro.carenciaEmMeses}" />
+					</p:column>
+					<p:column headerText="Situacao Atual" width="35%" sortBy="#{seguro.situacaoAtual}">
+						<h:outputText value="#{seguro.situacaoAtual}" />
+					</p:column>
+					<p:column headerText="Valor Premio" width="35%" sortBy="#{seguro.valorPremio}">
+						<h:outputText value="#{seguro.valorPremio}" />
+					</p:column>
+					<p:column headerText="Dia Pagamento" width="35%" sortBy="#{seguro.diaPagamento}">
+						<h:outputText value="#{seguro.diaPagamento}" />
+					</p:column>
+					<p:column headerText="Banco Pagamento" width="35%" sortBy="#{seguro.bancoPagamento}">
+						<h:outputText value="#{seguro.bancoPagamento}" />
+					</p:column>
+					<p:column headerText="Agencia" width="35%" sortBy="#{seguro.agencia}">
+						<h:outputText value="#{seguro.agencia}" />
+					</p:column>
+					<p:column headerText="Conta" width="35%" sortBy="#{seguro.conta}">
+						<h:outputText value="#{seguro.conta}" />
+					</p:column>
+					<p:column headerText="Comandos" width="20%">
+						<div align="center">
+							<p:commandLink id="editar" action="#{seguromb.editar(seguro.id)}"
+								value="Editar" update="pesquisa" ajax="false" />
+							<h:outputText value=" " />
+							<p:commandLink id="excluir" action="#{seguromb.excluir(seguro.id)}"
+								value="Excluir" update="pesquisa" ajax="false" />
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

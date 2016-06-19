@@ -52,14 +52,18 @@ public class ServicoSeguro implements DAO<Seguro, Long> {
 	@Override
 	public List<Seguro> findAll() throws Exception {
 		log.info("Encontrando todos os Seguros");
-		return em.createQuery("from Setor").getResultList();
+		return em.createQuery("from Seguro").getResultList();
 	}
 
 	@Override
 	public List<Seguro> findByName(String name) throws Exception {
-		log.info("Encontrando o "+name);
-		return em.createNamedQuery("Setor.findByName")
-				.setParameter("nome", name+"%").getResultList();
+		
+		return findByCodigoSusep(name);
+	}
+	public List<Seguro> findByCodigoSusep(String codigoSusep) throws Exception {
+		log.info("Encontrando o "+codigoSusep);
+		return em.createNamedQuery("Seguro.findByCodigo")
+				.setParameter("codigoSusep", codigoSusep+"%").getResultList();
 	}
 
 }

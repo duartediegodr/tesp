@@ -1,5 +1,6 @@
 package br.unibh.seguros.controle;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -22,10 +23,27 @@ public class ControleProponete {
 	
 	@Inject
 	private ServicoProponente ejb;
-	
 	private Proponente proponente;
 	private String nomeArg;
 	private List<Proponente> lista;
+	
+	public Proponente getProponente() {
+		return proponente;
+	}
+	public void setProponente(Proponente proponente) {
+		this.proponente = proponente;
+	}
+	
+	public String getNomeArg() {
+		return nomeArg;
+	}
+	
+	public void setNomeArg(String nomeArg) {
+		this.nomeArg = nomeArg;
+	}
+	public List<Proponente> getLista() {
+		return lista;
+	}
 	
 	@PostConstruct
 	public void inicializaLista(){
@@ -36,43 +54,46 @@ public class ControleProponete {
 		}
 	}
 	
-	public void gravar(){
+	public void gravar() {
+		
 		FacesMessage facesMsg;
 		try {
-			if(proponente.getId()==null){
+			if (proponente.getId() == null) {
+				proponente.setDataCadastro(new Date());
 				proponente = ejb.insert(proponente);
-			}else{
+			} else {
 				proponente = ejb.update(proponente);
 			}
+		
 			lista = ejb.findByName(nomeArg);
-		} catch (Exception e) {
-			facesMsg = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
+		} catch (Exception e){
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:"+e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
-		facesMsg = new FacesMessage(
-				FacesMessage.SEVERITY_ERROR,"Gravação realizada com sucesso!","");
+		
+		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Gravação realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
 	
-	public void pesquisar(){
+	public void pesquisar() {
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista = ejb.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void novo() {
+	public void novo(){
 		proponente = new Proponente();
 	}
 	
-	public void cancelar() {
+	public void cancelar(){
 		proponente = null;
 	}
 	
-	public void editar(Long id) {
+	public void editar(Long id){
 		try {
 			proponente = ejb.find(id);
 			return;
@@ -82,46 +103,20 @@ public class ControleProponete {
 		proponente = null;
 	}
 	
-	public void excluir(Long id) {
+	public void excluir(Long id){
 		FacesMessage facesMsg;
+		
 		try {
 			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			lista = ejb.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
-			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: "+ e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
 		proponente = null;
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
-	}
-	
-	
-	
-	
-	
-	public Proponente getProponente() {
-		return proponente;
-	}
-	public void setProponente(Proponente proponente) {
-		this.proponente = proponente;
-	}
-	public String getNomeArg() {
-		return nomeArg;
-	}
-	public void setNomeArg(String nomeArg) {
-		this.nomeArg = nomeArg;
-	}
-	public List<Proponente> getLista() {
-		return lista;
-	}
-	public void setLista(List<Proponente> lista) {
-		this.lista = lista;
-	}
-	
-	
-
-}
+	}}

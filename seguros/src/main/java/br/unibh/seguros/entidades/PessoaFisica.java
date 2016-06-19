@@ -34,7 +34,7 @@ public class PessoaFisica implements Serializable{
 	private Long version;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
@@ -49,12 +49,12 @@ public class PessoaFisica implements Serializable{
 	@Column (length=11, nullable=false,unique=true)
 	private String cpf;
 	
-	@Pattern(regexp="\\(\\d{2}\\)\\d{5}-\\d{4}")
+	@Pattern(regexp="\\(\\d{2}\\)\\d{4}-\\d{4}")
 	@Column (name="telefone_comercial",length=14)
 	private String telefoneComercial;
 
 	@NotBlank
-	@Pattern(regexp="\\(\\d{2}\\)\\d{5}-\\d{4}")
+	@Pattern(regexp="\\(\\d{2}\\)\\d{4}-\\d{4}")
 	@Column (name="telefone_residencial",length=14)
 	private String telefoneResidencial;
 	

@@ -58,9 +58,12 @@ public class ServicoTramitacao implements DAO<Tramitacao, Long> {
 
 	@Override
 	public List<Tramitacao> findByName(String name) throws Exception {
-		log.info("Encontrando o "+name);
-		return em.createNamedQuery("Tramitacao.findByName")
-				.setParameter("nome", name+"%").getResultList();
+		return findByEtapaProcesso(name);
+	}
+	public List<Tramitacao> findByEtapaProcesso(String etapaProcesso) throws Exception {
+		log.info("Encontrando o "+etapaProcesso);
+		return em.createNamedQuery("Tramitacao.findByEtapaProcesso")
+				.setParameter("etapaProcesso", etapaProcesso+"%").getResultList();
 	}
 
 }

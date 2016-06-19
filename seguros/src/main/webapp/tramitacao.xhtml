@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{tramitacaomb.tramitacao != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Tramitações"
+						style="font-size:18px;font-weight:bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">
+						<p:outputLabel value="Etapa Processo: " />
+						<p:inputText id="etapaProcesso" value="#{tramitacaomb.tramitacao.etapaProcesso}" size="50" />
+						<p:message for="etapaProcesso" errorClass="invalid" />			
+			            
+			            <p:outputLabel for="dataHora" value="Data e Hora: " />
+        				<p:calendar id="dataHora" value="#{tramitacaomb.tramitacao.dataHora}" size="50" pattern="MM/dd/yyyy HH:mm:ss" /><br /><br />
+        				
+        				<p:outputLabel for="situacaoInicial" value="Situacao Inicial " />
+				        <p:inputText id="situacaoInicial" value="#{tramitacaomb.tramitacao.situacaoInicial}" size="50" /><br /><br />
+				        
+				        <p:outputLabel for="situacaoFinal" value="Situacao Final: " />
+				        <p:inputText id="situacaoFinal" value="#{tramitacaomb.tramitacao.situacaoFinal}" size="50" /><br /><br />
+				        
+				        <p:outputLabel for="tipoDecisao" value="Tipo Decisão: " />
+				        <p:inputText id="tipoDecisao" value="#{tramitacaomb.tramitacao.tipoDecisao}" size="50" /><br /><br />
+				        
+				       	<p:outputLabel value="Comentários: " />
+						<p:inputText id="comentario" value="#{tramitacaomb.tramitacao.comentario}" size="50" />
+						<p:message for="comentario" errorClass="invalid" />			<br /><br />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{tramitacaomb.gravar}"
+						value="Gravar" update="cadastro" ajax="false" />
+					<p:commandButton id="cancelar" action="#{tramitacaomb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{tramitacaomb.tramitacao == null}">
+			<h:outputText value="Lista de Tramitações"
+				style="font-size:18px;font-weight:bold" />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Etapa Processo:" />
+					<p:inputText id="nomeArg" value="#{tramitacaomb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{tramitacaomb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{tramitacaomb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty tramitacaomb.lista}">
+				<h:outputText value="Nenhum Tramitações existente" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="tramitacao" value="#{tramitacaomb.lista}"
+					rendered="#{not empty tramitacaomb.lista}"
+					onrowclick="selectRow('#{tramitacao.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{tramitacao.id}">
+						<div align="center">
+							<h:outputText value="#{tramitacao.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Etapa Processo" width="35%" sortBy="#{tramitacao.etapaProcesso}">
+						<h:outputText value="#{tramitacao.etapaProcesso}" />
+					</p:column>
+					<p:column headerText="Data e Hora" width="35%" sortBy="#{tramitacao.dataHora}">
+						<h:outputText value="#{tramitacao.dataHora}" />
+					</p:column>
+					<p:column headerText="Situacao Inicial" width="35%" sortBy="#{tramitacao.situacaoInicial}">
+						<h:outputText value="#{tramitacao.situacaoInicial}" />
+					</p:column>
+					<p:column headerText="Situacao Final" width="35%" sortBy="#{tramitacao.situacaoFinal}">
+						<h:outputText value="#{tramitacao.situacaoFinal}" />
+					</p:column>
+					<p:column headerText="Tipo Decisao" width="90%" sortBy="#{tramitacao.tipoDecisao}">
+						<h:outputText value="#{tramitacao.tipoDecisao}" />
+					</p:column>
+					<p:column headerText="Comentário" width="35%" sortBy="#{tramitacao.comentario}">
+						<h:outputText value="#{tramitacao.comentario}" />
+					</p:column>
+					<p:column headerText="Comandos" width="20%">
+						<div align="center">
+							<p:commandLink id="editar" action="#{tramitacaomb.editar(tramitacao.id)}"
+								value="Editar" update="pesquisa" ajax="false" />
+							<h:outputText value=" " />
+							<p:commandLink id="excluir" action="#{tramitacaomb.excluir(tramitacao.id)}"
+								value="Excluir" update="pesquisa" ajax="false" />
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

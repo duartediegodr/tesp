@@ -22,10 +22,27 @@ public class ControleSeguro {
 	
 	@Inject
 	private ServicoSeguro ejb;
-	
 	private Seguro seguro;
 	private String nomeArg;
 	private List<Seguro> lista;
+	
+	public Seguro getSeguro() {
+		return seguro;
+	}
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
+	}
+	
+	public String getNomeArg() {
+		return nomeArg;
+	}
+	
+	public void setNomeArg(String nomeArg) {
+		this.nomeArg = nomeArg;
+	}
+	public List<Seguro> getLista() {
+		return lista;
+	}
 	
 	@PostConstruct
 	public void inicializaLista(){
@@ -36,43 +53,45 @@ public class ControleSeguro {
 		}
 	}
 	
-	public void gravar(){
+	public void gravar() {
+		
 		FacesMessage facesMsg;
 		try {
-			if(seguro.getId()==null){
+			if (seguro.getId() == null) {
 				seguro = ejb.insert(seguro);
-			}else{
+			} else {
 				seguro = ejb.update(seguro);
 			}
+		
 			lista = ejb.findByName(nomeArg);
-		} catch (Exception e) {
-			facesMsg = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
+		} catch (Exception e){
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:"+e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
-		facesMsg = new FacesMessage(
-				FacesMessage.SEVERITY_ERROR,"Gravação realizada com sucesso!","");
+		
+		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Gravação realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
 	
-	public void pesquisar(){
+	public void pesquisar() {
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista = ejb.findByCodigoSusep(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void novo() {
+	public void novo(){
 		seguro = new Seguro();
 	}
 	
-	public void cancelar() {
+	public void cancelar(){
 		seguro = null;
 	}
 	
-	public void editar(Long id) {
+	public void editar(Long id){
 		try {
 			seguro = ejb.find(id);
 			return;
@@ -82,15 +101,16 @@ public class ControleSeguro {
 		seguro = null;
 	}
 	
-	public void excluir(Long id) {
+	public void excluir(Long id){
 		FacesMessage facesMsg;
+		
 		try {
 			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			lista = ejb.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
-			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: "+ e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
@@ -98,30 +118,4 @@ public class ControleSeguro {
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
-	
-	
-	
-	
-	
-	public Seguro getSeguro() {
-		return seguro;
-	}
-	public void setSeguro(Seguro seguro) {
-		this.seguro = seguro;
-	}
-	public String getNomeArg() {
-		return nomeArg;
-	}
-	public void setNomeArg(String nomeArg) {
-		this.nomeArg = nomeArg;
-	}
-	public List<Seguro> getLista() {
-		return lista;
-	}
-	public void setLista(List<Seguro> lista) {
-		this.lista = lista;
-	}
-	
-	
-
 }

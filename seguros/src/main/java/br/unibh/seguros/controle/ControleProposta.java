@@ -22,10 +22,27 @@ public class ControleProposta {
 	
 	@Inject
 	private ServicoProposta ejb;
-	
 	private Proposta proposta;
 	private String nomeArg;
 	private List<Proposta> lista;
+	
+	public Proposta getProposta() {
+		return proposta;
+	}
+	public void setProposta(Proposta proposta) {
+		this.proposta = proposta;
+	}
+	
+	public String getNomeArg() {
+		return nomeArg;
+	}
+	
+	public void setNomeArg(String nomeArg) {
+		this.nomeArg = nomeArg;
+	}
+	public List<Proposta> getLista() {
+		return lista;
+	}
 	
 	@PostConstruct
 	public void inicializaLista(){
@@ -36,43 +53,45 @@ public class ControleProposta {
 		}
 	}
 	
-	public void gravar(){
+	public void gravar() {
+		
 		FacesMessage facesMsg;
 		try {
-			if(proposta.getId()==null){
+			if (proposta.getId() == null) {
 				proposta = ejb.insert(proposta);
-			}else{
+			} else {
 				proposta = ejb.update(proposta);
 			}
+		
 			lista = ejb.findByName(nomeArg);
-		} catch (Exception e) {
-			facesMsg = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
+		} catch (Exception e){
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:"+e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
-		facesMsg = new FacesMessage(
-				FacesMessage.SEVERITY_ERROR,"Gravação realizada com sucesso!","");
+		
+		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Gravação realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
 	
-	public void pesquisar(){
+	public void pesquisar() {
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista = ejb.findByConta(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void novo() {
+	public void novo(){
 		proposta = new Proposta();
 	}
 	
-	public void cancelar() {
+	public void cancelar(){
 		proposta = null;
 	}
 	
-	public void editar(Long id) {
+	public void editar(Long id){
 		try {
 			proposta = ejb.find(id);
 			return;
@@ -82,15 +101,16 @@ public class ControleProposta {
 		proposta = null;
 	}
 	
-	public void excluir(Long id) {
+	public void excluir(Long id){
 		FacesMessage facesMsg;
+		
 		try {
 			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			lista = ejb.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
-			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: "+ e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
@@ -98,30 +118,4 @@ public class ControleProposta {
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
-	
-	
-	
-	
-	
-	public Proposta getProposta() {
-		return proposta;
-	}
-	public void setProposta(Proposta proposta) {
-		this.proposta = proposta;
-	}
-	public String getNomeArg() {
-		return nomeArg;
-	}
-	public void setNomeArg(String nomeArg) {
-		this.nomeArg = nomeArg;
-	}
-	public List<Proposta> getLista() {
-		return lista;
-	}
-	public void setLista(List<Proposta> lista) {
-		this.lista = lista;
-	}
-	
-	
-
 }

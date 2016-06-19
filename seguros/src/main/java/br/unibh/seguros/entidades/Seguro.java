@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +30,10 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name="tb_seguro")
+@NamedQueries({
+	@NamedQuery(name="Seguro.findByCodigo", 
+			query="select o from Seguro o where o.codigoSusep like :codigoSusep")
+})
 public class Seguro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Version

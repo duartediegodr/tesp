@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{propostamb.proposta != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Proposta"
+						style="font-size:18px;font-weight:bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">
+						<p:outputLabel value="Data: " />
+        				
+        				<p:calendar id="data" value="#{propostamb.proposta.data}" effect="fold" size="50" /><br /><br />
+						<p:outputLabel value="Tipo Segurado: " />
+						
+						<p:inputText id="tipoSegurado" value="#{propostamb.proposta.tipoSegurado}" size="50" />
+						<p:message for="tipoSegurado" errorClass="invalid" />
+						
+						<h:outputLabel for="valorSegurado" value="Valor Segurado: " />
+						<p:inputText id="valorSegurado" value="#{propostamb.proposta.valorSegurado}" size="50" /><br /><br />
+						
+						<p:outputLabel value="Classe: " />
+						<p:inputText id="classe" value="#{propostamb.proposta.classe}" size="50" />
+						<p:message for="classe" errorClass="invalid" />
+						
+						<p:outputLabel value="Data Inicio Vigencia: " />
+        				<p:calendar id="dataInicioVigencia" value="#{propostamb.proposta.dataInicioVigencia}" size="50" effect="fold" /><br /><br />
+        				
+        				<p:outputLabel value="Data Termino Vigencia: " />
+        				<p:calendar id="dataTerminoVigencia" value="#{propostamb.proposta.dataTerminoVigencia}" size="50" effect="fold" /><br /><br />
+        				
+        				<p:outputLabel value="Carencia em meses: " />
+        				<p:inputText id="carenciaEmMeses" value="#{propostamb.proposta.carenciaEmMeses}" size="50"/><br /><br />
+        				
+        				<p:outputLabel for="situacaoAtual" value="Situacao Atual: " />
+				        <p:inputText id="situacaoAtual" value="#{propostamb.proposta.situacaoAtual}" size="50" />
+						<p:message for="situacaoAtual" errorClass="invalid" />
+				        
+				        <h:outputLabel for="valorPremio" value="Valor Premio: " />
+        				<p:inputText id="valorPremio" value="#{propostamb.proposta.valorPremio}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="diaPagamento" value="Dia Pagamento: " />
+        				<p:inputText id="diaPagamento" value="#{propostamb.proposta.diaPagamento}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="conta" value="Banco Pagamento: " />
+        				<p:inputText id="conta" value="#{propostamb.proposta.conta}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="agencia" value="Agência: " />
+        				<p:inputText id="agencia" value="#{propostamb.proposta.agencia}" size="50" /><br /><br />
+        				
+        				<h:outputLabel for="bancoPagamento" value="Conta: " />
+        				<p:inputText id="bancoPagamento" value="#{propostamb.proposta.bancoPagamento}" size="50" /><br /><br />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{propostamb.gravar}"
+						value="Gravar" update="cadastro" ajax="false" />
+					<p:commandButton id="cancelar" action="#{propostamb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{propostamb.proposta == null}">
+			<h:outputText value="Lista de Propostas"
+				style="font-size:18px;font-weight:bold" />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Digite a conta da proposta: " />
+					<p:inputText id="nomeArg" value="#{propostamb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{propostamb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{propostamb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty propostamb.lista}">
+				<h:outputText value="Nenhuma proposta existe" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="proposta" value="#{propostamb.lista}"
+					rendered="#{not empty propostamb.lista}"
+					onrowclick="selectRow('#{proposta.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{proposta.id}">
+						<div align="center">
+							<h:outputText value="#{proposta.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Data: " width="35%" sortBy="#{proposta.data}">
+						<h:outputText value="#{proposta.data}" />
+					</p:column>
+					<p:column headerText="Tipo Segurado " width="35%" sortBy="#{proposta.tipoSegurado}">
+						<h:outputText value="#{proposta.tipoSegurado}" />
+					</p:column>
+					<p:column headerText="Valor Segurado " width="35%" sortBy="#{proposta.valorSegurado}">
+						<h:outputText value="#{proposta.valorSegurado}" />
+					</p:column>
+					<p:column headerText="Data inicio vigência " width="35%" sortBy="#{proposta.dataInicioVigencia}">
+						<h:outputText value="#{proposta.dataInicioVigencia}" />
+					</p:column>
+					<p:column headerText="Data fim vigência " width="35%" sortBy="#{proposta.dataTerminoVigencia}">
+						<h:outputText value="#{proposta.dataTerminoVigencia}" />
+					</p:column>
+					<p:column headerText="Situação Atual " width="35%" sortBy="#{proposta.situacaoAtual}">
+						<h:outputText value="#{proposta.situacaoAtual}" />
+					</p:column>
+					<p:column headerText="Valor Premio " width="35%" sortBy="#{proposta.valorPremio}">
+						<h:outputText value="#{proposta.valorPremio}" />
+					</p:column>
+					<p:column headerText="Agência " width="35%" sortBy="#{proposta.agencia}">
+						<h:outputText value="#{proposta.agencia}" />
+					</p:column>
+					<p:column headerText="Conta " width="35%" sortBy="#{proposta.conta}">
+						<h:outputText value="#{proposta.conta}" />
+					</p:column>
+					<p:column headerText="Comandos" width="20%">
+						<div align="center">
+							<p:commandLink id="editar" action="#{propostamb.editar(proposta.id)}"
+								value="Editar" update="pesquisa" ajax="false" />
+							<h:outputText value=" " />
+							<p:commandLink id="excluir" action="#{propostamb.excluir(proposta.id)}"
+								value="Excluir" update="pesquisa" ajax="false" />
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

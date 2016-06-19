@@ -52,13 +52,13 @@ public class ServicoProponente implements DAO<Proponente, Long> {
 	@Override
 	public List<Proponente> findAll() throws Exception {
 		log.info("Encontrando todos os Proponente");
-		return em.createQuery("from Setor").getResultList();
+		return em.createQuery("from Proponente").getResultList();
 	}
 
 	@Override
 	public List<Proponente> findByName(String name) throws Exception {
 		log.info("Encontrando o "+name);
-		return em.createNamedQuery("Setor.findByName")
+		return em.createNamedQuery("Proponente.findByName")
 				.setParameter("nome", name+"%").getResultList();
 	}
 

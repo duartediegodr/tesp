@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +26,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tb_tramitacao")
+@NamedQueries({
+	@NamedQuery(name="Tramitacao.findByEtapaProcesso", 
+			query="select o from Tramitacao o where o.etapaProcesso like :etapaProcesso")
+})
 public class Tramitacao implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Version
@@ -64,14 +70,13 @@ public class Tramitacao implements Serializable{
 
 
 	@NotBlank
-	@Pattern(regexp="[A-zÀ-ú ]*",message="Deverá ter apenas Letras e Espaço")
 	@Size(max=4000)
 	@Column (columnDefinition="TEXT(4000)", nullable=false)
 	private String comentario;
 
 	@Lob
 	@Column
-	private File documento;
+	private String documento;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Proposta proposta;
@@ -83,7 +88,27 @@ public class Tramitacao implements Serializable{
 	@JoinColumn(name="usuario_decisao")
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Usuario usuarioDecisao;
+
 	
+	public Tramitacao() {
+		super();
+	}
+
+	public Tramitacao(String etapaProcesso, Date dataHora, String situacaoInicial, String situacaoFinal,
+			String tipoDecisao, String comentario, String documento, Proposta proposta, Setor setorResponsavel,
+			Usuario usuarioDecisao) {
+		super();
+		this.etapaProcesso = etapaProcesso;
+		this.dataHora = dataHora;
+		this.situacaoInicial = situacaoInicial;
+		this.situacaoFinal = situacaoFinal;
+		this.tipoDecisao = tipoDecisao;
+		this.comentario = comentario;
+		this.documento = documento;
+		this.proposta = proposta;
+		this.setorResponsavel = setorResponsavel;
+		this.usuarioDecisao = usuarioDecisao;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -126,10 +151,10 @@ public class Tramitacao implements Serializable{
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public File getDocumento() {
+	public String getDocumento() {
 		return documento;
 	}
-	public void setDocumento(File documento) {
+	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
 	public Proposta getProposta() {

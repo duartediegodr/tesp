@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{usuariomb.usuario != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de Usuarios" style="font-size:18px;fontweight:bold"/>
+					<p:messages/>
+						<p:panelGrid columns="3" styleClass="ui-noborder">
+							<p:outputLabel value="Nome " />
+							<p:inputText id="nome" value="#{usuariomb.usuario.nome}" size="50" />
+							<p:message for="nome" errorClass="invalid" />
+							<p:outputLabel value="Email " />
+							<p:inputText id="email" value="#{usuariomb.usuario.email}" size="50" />
+							<p:message for="email" errorClass="invalid" />
+							<p:outputLabel value="Cargo" />
+							<p:inputText id="cargo" value="#{usuariomb.usuario.cargo}" size="50" />
+							<p:message for="cargo" errorClass="invalid" />
+							<p:outputLabel value="Perfil" />
+							<p:inputText id="perfil" value="#{usuariomb.usuario.perfil}" size="50" />
+							<p:message for="perfil" errorClass="invalid" />
+							<p:outputLabel value="Login" />
+							<p:inputText id="login" value="#{usuariomb.usuario.login}" size="50" />
+							<p:message for="login" errorClass="invalid" />
+							<p:outputLabel value="Senha" />
+							<p:inputText id="senha" value="#{usuariomb.usuario.senha}" size="50" />
+							<p:message for="senha" errorClass="invalid" />
+						</p:panelGrid>
+						<p:commandButton id="gravar" action="#{usuariomb.gravar}" value="Gravar" update="cadastro" ajax="false"/>
+						<p:commandButton id="cancelar" action="#{usuariomb.cancelar}" value="Cancelar" immediate="true" update="cadastro,pesquisa" ajax="false"/>
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{usuariomb.usuario == null}">
+			<h:outputText value="Lista de Usuarios" style="font-size:18px;fontweight:bold"/>
+			<h:form id="arg">	
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Nome:" />
+					<p:inputText id="nomeArg" value="#{usuariomb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{usuariomb.pesquisar}" value="Pesquisar" update="pesquisa" ajax="false"/>
+					<p:commandButton id="novo" action="#{usuariomb.novo}" value="Novo" update="pesquisa,cadastro" ajax="false"/>
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty usuariomb.lista}">
+				<h:outputText value="Nenhum usuario existe"/>
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="usuario" value="#{usuariomb.lista}" rendered="#{not empty usuariomb.lista}" onrowclick="selectRow('#{usuario.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="10%" sortBy="#{usuario.id}">
+			 			<div align="center">
+			 				<h:outputText value="#{usuario.id}" />
+			 			</div>
+			 		</p:column>
+					<p:column headerText="Nome" width="35%" sortBy="#{usuario.nome}">
+			 			<h:outputText value="#{usuario.nome}" />
+			 		</p:column>
+			 		<p:column headerText="Comandos" width="20%">
+			 			<div align="center">
+			 				<p:commandLink id="editar" action="#{usuariomb.editar(usuario.id)}" value="Editar" update="pesquisa" ajax="false"/>
+			 				<h:outputText value=" " />
+			 				<p:commandLink id="excluir" action="#{usuariomb.excluir(usuario.id)}" value="Excluir" update="pesquisa" ajax="false" />
+			 			</div>
+			 		</p:column>
+				</p:dataTable>
+				<p:messages />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

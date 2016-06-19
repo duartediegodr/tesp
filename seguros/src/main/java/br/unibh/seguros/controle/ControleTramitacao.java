@@ -22,10 +22,27 @@ public class ControleTramitacao {
 	
 	@Inject
 	private ServicoTramitacao ejb;
-	
 	private Tramitacao tramitacao;
 	private String nomeArg;
 	private List<Tramitacao> lista;
+	
+	public Tramitacao getTramitacao() {
+		return tramitacao;
+	}
+	public void setTramitacao(Tramitacao tramitacao) {
+		this.tramitacao = tramitacao;
+	}
+	
+	public String getNomeArg() {
+		return nomeArg;
+	}
+	
+	public void setNomeArg(String nomeArg) {
+		this.nomeArg = nomeArg;
+	}
+	public List<Tramitacao> getLista() {
+		return lista;
+	}
 	
 	@PostConstruct
 	public void inicializaLista(){
@@ -36,43 +53,45 @@ public class ControleTramitacao {
 		}
 	}
 	
-	public void gravar(){
+	public void gravar() {
+		
 		FacesMessage facesMsg;
 		try {
-			if(tramitacao.getId()==null){
+			if (tramitacao.getId() == null) {
 				tramitacao = ejb.insert(tramitacao);
-			}else{
+			} else {
 				tramitacao = ejb.update(tramitacao);
 			}
+		
 			lista = ejb.findByName(nomeArg);
-		} catch (Exception e) {
-			facesMsg = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
+		} catch (Exception e){
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:"+e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
-		facesMsg = new FacesMessage(
-				FacesMessage.SEVERITY_ERROR,"Gravação realizada com sucesso!","");
+		
+		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Gravação realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
 	
-	public void pesquisar(){
+	public void pesquisar() {
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista = ejb.findByEtapaProcesso(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void novo() {
+	public void novo(){
 		tramitacao = new Tramitacao();
 	}
 	
-	public void cancelar() {
+	public void cancelar(){
 		tramitacao = null;
 	}
 	
-	public void editar(Long id) {
+	public void editar(Long id){
 		try {
 			tramitacao = ejb.find(id);
 			return;
@@ -82,15 +101,16 @@ public class ControleTramitacao {
 		tramitacao = null;
 	}
 	
-	public void excluir(Long id) {
+	public void excluir(Long id){
 		FacesMessage facesMsg;
+		
 		try {
 			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			lista = ejb.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
-			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: "+ e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage("messagePanel",facesMsg);
 			log.warning("Erro: "+e.getMessage());
 			return;
 		}
@@ -98,30 +118,4 @@ public class ControleTramitacao {
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
-	
-	
-	
-	
-	
-	public Tramitacao getTramitacao() {
-		return tramitacao;
-	}
-	public void setTramitacao(Tramitacao tramitacao) {
-		this.tramitacao = tramitacao;
-	}
-	public String getNomeArg() {
-		return nomeArg;
-	}
-	public void setNomeArg(String nomeArg) {
-		this.nomeArg = nomeArg;
-	}
-	public List<Tramitacao> getLista() {
-		return lista;
-	}
-	public void setLista(List<Tramitacao> lista) {
-		this.lista = lista;
-	}
-	
-	
-
 }
