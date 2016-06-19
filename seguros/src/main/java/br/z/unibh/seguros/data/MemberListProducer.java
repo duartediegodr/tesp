@@ -1,6 +1,5 @@
-package br.unibh.seguros.data;
+package br.z.unibh.seguros.data;
 
-import br.unibh.seguros.model.Member;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -14,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import br.z.unibh.seguros.model.Member;
 
 @RequestScoped
 public class MemberListProducer {

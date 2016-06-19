@@ -16,9 +16,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import br.unibh.seguros.controller.MemberRegistration;
-import br.unibh.seguros.model.Member;
 import br.unibh.seguros.util.Resources;
+import br.z.unibh.seguros.controller.MemberRegistration;
+import br.z.unibh.seguros.model.Member;
 @Ignore
 @RunWith(Arquillian.class)
 public class MemberRegistrationTest {

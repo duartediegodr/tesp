@@ -1,4 +1,4 @@
-package br.unibh.seguros.controller;
+package br.z.unibh.seguros.controller;
 
 import java.util.logging.Logger;
 
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-import br.unibh.seguros.model.Member;
+import br.z.unibh.seguros.model.Member;
 
 // The @Stateful annotation eliminates the need for manual transaction demarcation
 @Stateful

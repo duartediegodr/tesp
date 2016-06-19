@@ -1,4 +1,4 @@
-package br.unibh.seguros.model;
+package br.z.unibh.seguros.model;
 
 import java.io.Serializable;
 
