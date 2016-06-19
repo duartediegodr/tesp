@@ -14,18 +14,25 @@
 
    <div id="container">
       <div id="content">
-<p:menubar orientation="horizontal" style="margin-top:20px">
-    <p:submenu label="Inicio" icon="ui-icon-check">
-                <p:menuitem value="Setor" url="/setor.jsf" />
-                <p:menuitem value="Usuario" url="/usuario.jsf" />
-                <p:menuitem value="Proponente" url="/proponente.jsf" />
-                <p:menuitem value="Proposta" url="/proposta.jsf" />
-                <p:menuitem value="Seguro" url="/seguro.jsf" />
-                <p:menuitem value="Tramitação" url="/tramitacao.jsf" />
- 
-    </p:submenu>
- 
-</p:menubar>
+	<p:menubar orientation="horizontal" style="margin-top:20px">
+	    <p:submenu label="Inicio" >
+	                <p:menuitem value="Setor" url="/setor.jsf" />
+	                <p:menuitem value="Usuario" url="/usuario.jsf" />
+	                <p:menuitem value="Proponente" url="/proponente.jsf" />
+	                <p:menuitem value="Proposta" url="/proposta.jsf" />
+	                <p:menuitem value="Seguro" url="/seguro.jsf" />
+	                <p:menuitem value="Tramitação" url="/tramitacao.jsf" />
+	 
+	    </p:submenu>
+		<p:submenu label="Relatórios" icon="ui-icon-document">
+			<p:submenu label="Usuário">
+			  	<p:menuitem value="Ver relatório" url="#" icon="ui-icon-search" ajax="false" target="_blank" 
+					actionListener="#{relatoriosmb.geraRelatorio('default','inline')}"/> 
+				<p:menuitem value="Baixar relatório" url="#" icon="ui-icon-disk" ajax="false" 
+					actionListener="#{relatoriosmb.geraRelatorio('default',-'attach')}" />
+			</p:submenu>
+		</p:submenu>
+	</p:menubar>
          <ui:insert name="content">
                     [Template content will be inserted here]
                 </ui:insert>

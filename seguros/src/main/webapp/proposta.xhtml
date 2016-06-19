@@ -84,45 +84,51 @@
 				<p:dataTable id="tabela" var="proposta" value="#{propostamb.lista}"
 					rendered="#{not empty propostamb.lista}"
 					onrowclick="selectRow('#{proposta.id}')" paginator="true" rows="15">
-					<p:column headerText="Id" width="10%" sortBy="#{proposta.id}">
+					<p:column headerText="Id" width="5%" sortBy="#{proposta.id}">
 						<div align="center">
 							<h:outputText value="#{proposta.id}" />
 						</div>
 					</p:column>
-					<p:column headerText="Data: " width="35%" sortBy="#{proposta.data}">
+					<p:column headerText="Data: " width="10%" sortBy="#{proposta.data}">
 						<h:outputText value="#{proposta.data}" />
 					</p:column>
-					<p:column headerText="Tipo Segurado " width="35%" sortBy="#{proposta.tipoSegurado}">
+					<p:column headerText="Tipo Segurado " width="10%" sortBy="#{proposta.tipoSegurado}">
 						<h:outputText value="#{proposta.tipoSegurado}" />
 					</p:column>
-					<p:column headerText="Valor Segurado " width="35%" sortBy="#{proposta.valorSegurado}">
+					<p:column headerText="Valor Segurado " width="15%" sortBy="#{proposta.valorSegurado}">
 						<h:outputText value="#{proposta.valorSegurado}" />
 					</p:column>
-					<p:column headerText="Data inicio vigência " width="35%" sortBy="#{proposta.dataInicioVigencia}">
+					<p:column headerText="Data inicio vigência " width="10%" sortBy="#{proposta.dataInicioVigencia}">
 						<h:outputText value="#{proposta.dataInicioVigencia}" />
 					</p:column>
-					<p:column headerText="Data fim vigência " width="35%" sortBy="#{proposta.dataTerminoVigencia}">
+					<p:column headerText="Data fim vigência " width="10%" sortBy="#{proposta.dataTerminoVigencia}">
 						<h:outputText value="#{proposta.dataTerminoVigencia}" />
 					</p:column>
-					<p:column headerText="Situação Atual " width="35%" sortBy="#{proposta.situacaoAtual}">
+					<p:column headerText="Situação Atual " width="10%" sortBy="#{proposta.situacaoAtual}">
 						<h:outputText value="#{proposta.situacaoAtual}" />
 					</p:column>
-					<p:column headerText="Valor Premio " width="35%" sortBy="#{proposta.valorPremio}">
+					<p:column headerText="Valor Premio " width="15%" sortBy="#{proposta.valorPremio}">
 						<h:outputText value="#{proposta.valorPremio}" />
 					</p:column>
-					<p:column headerText="Agência " width="35%" sortBy="#{proposta.agencia}">
+					<p:column headerText="Agência " width="10%" sortBy="#{proposta.agencia}">
 						<h:outputText value="#{proposta.agencia}" />
 					</p:column>
-					<p:column headerText="Conta " width="35%" sortBy="#{proposta.conta}">
+					<p:column headerText="Conta " width="10%" sortBy="#{proposta.conta}">
 						<h:outputText value="#{proposta.conta}" />
 					</p:column>
-					<p:column headerText="Comandos" width="20%">
+					<p:column headerText="Comandos" width="10%">
 						<div align="center">
-							<p:commandLink id="editar" action="#{propostamb.editar(proposta.id)}"
-								value="Editar" update="pesquisa" ajax="false" />
+							<p:commandButton id="editar" icon="ui-icon-pencil" action="#{propostamb.editar(proposta.id)}"
+								title="Editar" update="pesquisa" ajax="false" />
 							<h:outputText value=" " />
-							<p:commandLink id="excluir" action="#{propostamb.excluir(proposta.id)}"
-								value="Excluir" update="pesquisa" ajax="false" />
+							<p:commandButton id="excluir" icon="ui-icon-trash" action="#{propostamb.excluir(proposta.id)}"
+								title="Excluir" update="pesquisa" ajax="false" >
+								<p:confirm header="Confirmação" message="Você confirma a exclusão da Proposta #{proposta.id}?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
 						</div>
 					</p:column>
 				</p:dataTable>

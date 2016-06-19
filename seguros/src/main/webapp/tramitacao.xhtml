@@ -61,36 +61,42 @@
 				<p:dataTable id="tabela" var="tramitacao" value="#{tramitacaomb.lista}"
 					rendered="#{not empty tramitacaomb.lista}"
 					onrowclick="selectRow('#{tramitacao.id}')" paginator="true" rows="15">
-					<p:column headerText="Id" width="10%" sortBy="#{tramitacao.id}">
+					<p:column headerText="Id" width="5%" sortBy="#{tramitacao.id}">
 						<div align="center">
 							<h:outputText value="#{tramitacao.id}" />
 						</div>
 					</p:column>
-					<p:column headerText="Etapa Processo" width="35%" sortBy="#{tramitacao.etapaProcesso}">
+					<p:column headerText="Etapa Processo" width="13%" sortBy="#{tramitacao.etapaProcesso}">
 						<h:outputText value="#{tramitacao.etapaProcesso}" />
 					</p:column>
-					<p:column headerText="Data e Hora" width="35%" sortBy="#{tramitacao.dataHora}">
+					<p:column headerText="Data e Hora" width="10%" sortBy="#{tramitacao.dataHora}">
 						<h:outputText value="#{tramitacao.dataHora}" />
 					</p:column>
-					<p:column headerText="Situacao Inicial" width="35%" sortBy="#{tramitacao.situacaoInicial}">
+					<p:column headerText="Situacao Inicial" width="13%" sortBy="#{tramitacao.situacaoInicial}">
 						<h:outputText value="#{tramitacao.situacaoInicial}" />
 					</p:column>
-					<p:column headerText="Situacao Final" width="35%" sortBy="#{tramitacao.situacaoFinal}">
+					<p:column headerText="Situacao Final" width="13%" sortBy="#{tramitacao.situacaoFinal}">
 						<h:outputText value="#{tramitacao.situacaoFinal}" />
 					</p:column>
-					<p:column headerText="Tipo Decisao" width="90%" sortBy="#{tramitacao.tipoDecisao}">
+					<p:column headerText="Tipo Decisao" width="10%" sortBy="#{tramitacao.tipoDecisao}">
 						<h:outputText value="#{tramitacao.tipoDecisao}" />
 					</p:column>
-					<p:column headerText="Comentário" width="35%" sortBy="#{tramitacao.comentario}">
+					<p:column headerText="Comentário" width="40%" sortBy="#{tramitacao.comentario}">
 						<h:outputText value="#{tramitacao.comentario}" />
 					</p:column>
-					<p:column headerText="Comandos" width="20%">
+					<p:column headerText="Comandos" width="10%">
 						<div align="center">
-							<p:commandLink id="editar" action="#{tramitacaomb.editar(tramitacao.id)}"
-								value="Editar" update="pesquisa" ajax="false" />
+							<p:commandButton id="editar" icon="ui-icon-pencil" action="#{tramitacaomb.editar(tramitacao.id)}"
+								title="Editar" update="pesquisa" ajax="false" />
 							<h:outputText value=" " />
-							<p:commandLink id="excluir" action="#{tramitacaomb.excluir(tramitacao.id)}"
-								value="Excluir" update="pesquisa" ajax="false" />
+							<p:commandButton id="excluir" icon="ui-icon-trash" action="#{tramitacaomb.excluir(tramitacao.id)}"
+								title="Excluir" update="pesquisa" ajax="false"  >
+								<p:confirm header="Confirmação" message="Você confirma a exclusão da tramitação #{tramitacao.id}?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
 						</div>
 					</p:column>
 				</p:dataTable>

@@ -71,7 +71,7 @@ public class Usuario implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCadastro;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Setor setor;
 	
 	public Usuario() {

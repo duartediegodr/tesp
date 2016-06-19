@@ -1,16 +1,20 @@
 package br.unibh.seguros.controle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBs;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import br.unibh.seguros.entidades.Setor;
 import br.unibh.seguros.entidades.Usuario;
+import br.unibh.seguros.negocio.ServicoSetor;
 import br.unibh.seguros.negocio.ServicoUsuario;
 
 @ManagedBean(name = "usuariomb")
@@ -21,7 +25,10 @@ public class ControleUsuario {
 	private Logger log;
 	
 	@Inject
-	private ServicoUsuario ejb;
+	private ServicoUsuario ejbUsuario;
+	
+	@Inject
+	private ServicoSetor ejbSetor;
 	
 	private Usuario usuario;
 	private String nomeArg;
@@ -30,7 +37,7 @@ public class ControleUsuario {
 	@PostConstruct
 	public void inicializaLista(){
 		try {
-			lista = ejb.findAll();
+			lista = ejbUsuario.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,11 +47,11 @@ public class ControleUsuario {
 		FacesMessage facesMsg;
 		try {
 			if(usuario.getId()==null){
-				usuario = ejb.insert(usuario);
+				usuario = ejbUsuario.insert(usuario);
 			}else{
-				usuario = ejb.update(usuario);
+				usuario = ejbUsuario.update(usuario);
 			}
-			lista = ejb.findByName(nomeArg);
+			lista = ejbUsuario.findByName(nomeArg);
 		} catch (Exception e) {
 			facesMsg = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
@@ -58,7 +65,7 @@ public class ControleUsuario {
 	
 	public void pesquisar(){
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista=ejbUsuario.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,7 +81,7 @@ public class ControleUsuario {
 	
 	public void editar(Long id) {
 		try {
-			usuario = ejb.find(id);
+			usuario = ejbUsuario.find(id);
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,8 +92,8 @@ public class ControleUsuario {
 	public void excluir(Long id) {
 		FacesMessage facesMsg;
 		try {
-			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			ejbUsuario.delete(ejbUsuario.find(id));
+			lista = ejbUsuario.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
@@ -97,6 +104,15 @@ public class ControleUsuario {
 		usuario = null;
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+	}
+	
+	public List<Setor> getSetores(){
+		try{
+			return ejbSetor.findAll(); 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Setor>();
 	}
 	
 	

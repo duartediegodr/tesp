@@ -25,7 +25,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_setor")
 @NamedQueries({
 	@NamedQuery(name="Setor.findByName", 
-			query="select o from Setor o where o.nome like :nome")
+			query="select o from Setor o where o.nome like :nome"),
+	@NamedQuery(name="Setor.findOneById", 
+	query="select o from Setor o LEFT JOIN FETCH o.membros where o.id like :id")
 })
 public class Setor implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -43,16 +45,12 @@ public class Setor implements Serializable{
 	@Column (length=150, nullable=false,unique=true)
 	private String nome;
 	
-	
-	@OneToMany(mappedBy="setorSuperior", fetch=FetchType.LAZY)
-	private Collection<Setor> setoresInferiores;
-	
 	@JoinColumn (name="setor_superior")
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Setor setorSuperior;
 	
 	@OneToMany(mappedBy ="setor", fetch=FetchType.LAZY)
-	private Collection<Usuario> mebros;
+	private Collection<Usuario> membros;
 	
 	@OneToMany(mappedBy ="setorResponsavel", fetch=FetchType.LAZY)
 	private Collection<Tramitacao> tramitacoes;
@@ -75,17 +73,11 @@ public class Setor implements Serializable{
 	public void setSetorSuperior(Setor setorSuperior) {
 		this.setorSuperior = setorSuperior;
 	}
-	public Collection<Usuario> getMebros() {
-		return mebros;
+	public Collection<Usuario> getMembros() {
+		return membros;
 	}
-	public void setMebros(Collection<Usuario> mebros) {
-		this.mebros = mebros;
-	}
-	public Collection<Setor> getSetoresInferiores() {
-		return setoresInferiores;
-	}
-	public void setSetoresInferiores(Collection<Setor> setoresInferiores) {
-		this.setoresInferiores = setoresInferiores;
+	public void setMembros(Collection<Usuario> mebros) {
+		this.membros = mebros;
 	}
 	public Collection<Tramitacao> getTramitacoes() {
 		return tramitacoes;

@@ -1,5 +1,6 @@
 package br.unibh.seguros.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.unibh.seguros.entidades.Setor;
+import br.unibh.seguros.entidades.Usuario;
 
 @Stateless
 @LocalBean
@@ -24,16 +26,40 @@ public class ServicoSetor implements DAO<Setor, Long> {
 
 	@Override
 	public Setor insert(Setor t) throws Exception {
-		log.info("Persistindo "+t);
+		log.info("Persistindo " + t);
 		em.persist(t);
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		if (t.getMembros() != null) {
+			for (Usuario a : t.getMembros()) {
+				a.setSetor(t);
+				lista.add(em.merge(a));
+			}
+			t.setMembros(lista);
+		}
 		return t;
 	}
 
 	@Override
 	public Setor update(Setor t) throws Exception {
-		log.info("Atualizando "+t);
-		em.merge(t);
-		return t;
+		log.info("Atualizando " + t);
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		if (t.getMembros() != null) {
+			for (Usuario o : t.getMembros()) {
+				o.setSetor(t);
+				lista.add(em.merge(o));
+			}
+			t.setMembros(lista);
+		}
+		// Exclusao
+		Setor t2 = find(t.getId());
+		if (t2.getMembros() != null) {
+			for (Usuario o : t2.getMembros()) {
+				if (!t.getMembros().contains(o))
+					o.setSetor(null);
+				em.merge(o);
+			}
+		}
+		return em.merge(t);
 	}
 
 	@Override
@@ -45,8 +71,15 @@ public class ServicoSetor implements DAO<Setor, Long> {
 
 	@Override
 	public Setor find(Long k) throws Exception {
-		log.info("Encontrando"+k);
-		return em.find(Setor.class, k);
+		try {
+			log.info("Encontrando" + k);
+			return (Setor) em.createNamedQuery("Setor.findOneById").setParameter("id", k).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			/*Setor setor = em.find(Setor.class, k);
+			setor.setMembros(new ArrayList<Usuario>());*/
+			return null;
+		}
 	}
 
 	@Override

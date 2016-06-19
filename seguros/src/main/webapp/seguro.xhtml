@@ -83,57 +83,62 @@
 				<p:dataTable id="tabela" var="seguro" value="#{seguromb.lista}"
 					rendered="#{not empty seguromb.lista}"
 					onrowclick="selectRow('#{seguro.id}')" paginator="true" rows="15">
-					<p:column headerText="Id" width="10%" sortBy="#{seguro.id}">
+					<p:column headerText="Id" width="5%" sortBy="#{seguro.id}" style="font-size: 13.1px;">
 						<div align="center">
 							<h:outputText value="#{seguro.id}" />
 						</div>
 					</p:column>
-					<p:column headerText="Codigo Susep" width="35%" sortBy="#{seguro.codigoSusep}">
+					<p:column headerText="Codigo Susep"  sortBy="#{seguro.codigoSusep}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.codigoSusep}" />
 					</p:column>
-					<p:column headerText="Tipo Segurado" width="35%" sortBy="#{seguro.tipoSegurado}">
+					<p:column headerText="Tipo Segurado"  sortBy="#{seguro.tipoSegurado}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.tipoSegurado}" />
 					</p:column>
-					<p:column headerText="Valor Segurado" width="35%" sortBy="#{seguro.valorSegurado}">
+					<p:column headerText="Valor Segurado"  sortBy="#{seguro.valorSegurado}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.valorSegurado}" />
 					</p:column>
-					<p:column headerText="Classe" width="35%" sortBy="#{seguro.classe}">
+					<p:column headerText="Classe" width="5%" sortBy="#{seguro.classe}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.classe}" />
 					</p:column>
-					<p:column headerText="Data Inicio Vigencia" width="90%" sortBy="#{seguro.dataInicioVigencia}">
+					<p:column headerText="Data Inicio Vigencia"  sortBy="#{seguro.dataInicioVigencia}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.dataInicioVigencia}" />
 					</p:column>
-					<p:column headerText="Data Termino Vigencia" width="35%" sortBy="#{seguro.dataTerminoVigencia}">
+					<p:column headerText="Data Termino Vigencia"  sortBy="#{seguro.dataTerminoVigencia}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.dataTerminoVigencia}" />
 					</p:column>
-					<p:column headerText="Carencia EmMeses" width="35%" sortBy="#{seguro.carenciaEmMeses}">
+					<p:column headerText="Carencia EmMeses"  sortBy="#{seguro.carenciaEmMeses}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.carenciaEmMeses}" />
 					</p:column>
-					<p:column headerText="Situacao Atual" width="35%" sortBy="#{seguro.situacaoAtual}">
+					<p:column headerText="Situacao Atual"  sortBy="#{seguro.situacaoAtual}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.situacaoAtual}" />
 					</p:column>
-					<p:column headerText="Valor Premio" width="35%" sortBy="#{seguro.valorPremio}">
+					<p:column headerText="Valor Premio"  sortBy="#{seguro.valorPremio}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.valorPremio}" />
 					</p:column>
-					<p:column headerText="Dia Pagamento" width="35%" sortBy="#{seguro.diaPagamento}">
+					<p:column headerText="Dia Pagamento"  sortBy="#{seguro.diaPagamento}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.diaPagamento}" />
 					</p:column>
-					<p:column headerText="Banco Pagamento" width="35%" sortBy="#{seguro.bancoPagamento}">
+					<p:column headerText="Banco Pagamento" width="8%" sortBy="#{seguro.bancoPagamento}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.bancoPagamento}" />
 					</p:column>
-					<p:column headerText="Agencia" width="35%" sortBy="#{seguro.agencia}">
+					<p:column headerText="Agencia" width="7%" sortBy="#{seguro.agencia}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.agencia}" />
 					</p:column>
-					<p:column headerText="Conta" width="35%" sortBy="#{seguro.conta}">
+					<p:column headerText="Conta" sortBy="#{seguro.conta}" style="font-size: 13.1px;">
 						<h:outputText value="#{seguro.conta}" />
 					</p:column>
-					<p:column headerText="Comandos" width="20%">
-						<div align="center">
-							<p:commandLink id="editar" action="#{seguromb.editar(seguro.id)}"
-								value="Editar" update="pesquisa" ajax="false" />
-							<h:outputText value=" " />
-							<p:commandLink id="excluir" action="#{seguromb.excluir(seguro.id)}"
-								value="Excluir" update="pesquisa" ajax="false" />
+					<p:column headerText="Comandos" width="9%" style="font-size: 13.1px;">
+						<div align="center" style="font-size: 15.89px;">
+							<p:commandButton id="editar" icon="ui-icon-pencil" action="#{seguromb.editar(seguro.id)}"
+								title="Editar" update="pesquisa" ajax="false" />
+							<p:commandButton id="excluir" icon="ui-icon-trash" action="#{seguromb.excluir(seguro.id)}"
+								title="Excluir" update="pesquisa" ajax="false" >
+								<p:confirm header="Confirmação" message="Você confirma a exclusão do seguro #{seguro.codigoSusep}?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
 						</div>
 					</p:column>
 				</p:dataTable>

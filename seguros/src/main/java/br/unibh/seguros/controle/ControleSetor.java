@@ -1,5 +1,6 @@
 package br.unibh.seguros.controle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -10,8 +11,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.primefaces.model.DualListModel;
+
 import br.unibh.seguros.entidades.Setor;
+import br.unibh.seguros.entidades.Usuario;
 import br.unibh.seguros.negocio.ServicoSetor;
+import br.unibh.seguros.negocio.ServicoUsuario;
 
 @ManagedBean(name = "setormb")
 @ViewScoped
@@ -21,7 +26,12 @@ public class ControleSetor {
 	private Logger log;
 	
 	@Inject
-	private ServicoSetor ejb;
+	private ServicoSetor ejbSetor;
+	@Inject
+	private ServicoUsuario ejbUsuario;
+
+	@SuppressWarnings("unused")
+	private DualListModel<Usuario> usuarios;
 	
 	private Setor setor;
 	private String nomeArg;
@@ -30,7 +40,7 @@ public class ControleSetor {
 	@PostConstruct
 	public void inicializaLista(){
 		try {
-			lista = ejb.findAll();
+			lista = ejbSetor.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,11 +50,11 @@ public class ControleSetor {
 		FacesMessage facesMsg;
 		try {
 			if(setor.getId()==null){
-				setor = ejb.insert(setor);
+				setor = ejbSetor.insert(setor);
 			}else{
-				setor = ejb.update(setor);
+				setor = ejbSetor.update(setor);
 			}
-			lista = ejb.findByName(nomeArg);
+			lista = ejbSetor.findByName(nomeArg);
 		} catch (Exception e) {
 			facesMsg = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,"Erro: "+e.getMessage(),"");
@@ -58,7 +68,7 @@ public class ControleSetor {
 	
 	public void pesquisar(){
 		try {
-			lista=ejb.findByName(nomeArg);
+			lista=ejbSetor.findByName(nomeArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,7 +84,7 @@ public class ControleSetor {
 	
 	public void editar(Long id) {
 		try {
-			setor = ejb.find(id);
+			setor = ejbSetor.find(id);
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,22 +95,67 @@ public class ControleSetor {
 	public void excluir(Long id) {
 		FacesMessage facesMsg;
 		try {
-			ejb.delete(ejb.find(id));
-			lista = ejb.findAll();
+			ejbSetor.delete(ejbSetor.find(id));
+			lista = ejbSetor.findAll();
 		} catch (Exception e) {
-			e.printStackTrace();
-			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
-			log.warning("Erro: "+e.getMessage());
-			return;
+			if (checkString(e, "a foreign key constraint fails")) {
+				facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Não é possível excluir o Setor pois possui setores filhos vinculados", "");
+				FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+				return;
+			} else {
+				e.printStackTrace();
+				facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "");
+				FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
+				log.warning("Erro: " + e.getMessage());
+				return;
+			}
 		}
 		setor = null;
 		facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exclusão realizada com sucesso!", "");
 		FacesContext.getCurrentInstance().addMessage("messagePanel", facesMsg);
 	}
 	
-	
-	
+	public List<Setor> getSetores(){
+		try{
+			return ejbSetor.findAll(); 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Setor>();
+	}
+
+	public DualListModel<Usuario> getUsuarios() throws Exception {
+		List<Usuario> source = new ArrayList<Usuario>();
+		List<Usuario> target = new ArrayList<Usuario>();
+		if (setor != null && setor.getId() != null) {
+			setor = ejbSetor.find(setor.getId());
+			if (setor.getMembros() != null) {
+				target = new ArrayList<Usuario>(setor.getMembros());
+			}
+		}
+		source = ejbUsuario.findAll();
+		if (target.size() > 0) {
+			for (Usuario a : target) {
+				source.remove(a);
+			}
+		}
+		return new DualListModel<Usuario>(source, target);
+	}
+
+	public void setUsuarios(DualListModel<Usuario> usuarios) {
+		this.usuarios = usuarios;
+		setor.setMembros(usuarios.getTarget());
+	}
+
+	private boolean checkString(Throwable e, String str) {
+		if (e.getMessage().contains(str)) {
+			return true;
+		} else if (e.getCause() != null) {
+			return checkString(e.getCause(), str);
+		}
+		return false;
+	}
 	
 	
 	public Setor getSetor() {

@@ -52,7 +52,7 @@ public class ServicoUsuario implements DAO<Usuario, Long> {
 	@Override
 	public List<Usuario> findAll() throws Exception {
 		log.info("Encontrando todos os Usuarios");
-		return em.createQuery("from Usuario").getResultList();
+		return em.createQuery("select o from Usuario o left join fetch o.setor order by o.nome").getResultList();
 	}
 
 	@Override

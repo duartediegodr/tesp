@@ -17,6 +17,25 @@
 						<p:outputLabel value="Nome " />
 						<p:inputText id="nome" value="#{setormb.setor.nome}" size="50" />
 						<p:message for="nome" errorClass="invalid" />
+						<p:outputLabel value="Setor Superior " />
+						<p:selectOneMenu id="setor" value="#{setormb.setor.setorSuperior}" enableManualInput="true"
+							defaultLabel="digite para filtrar" converter="ConversorSetor" style="width:125px" panelStyle="width:210px">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{setormb.setores}" var="setor" 
+								itemValue="#{setor}" itemLabel="#{setor.nome}" />
+						</p:selectOneMenu>
+						<p:message for="setor" errorClass="invalid" />
+
+						<p:outputLabel value="Usuários " />
+						<p:pickList id="usuarios" value="#{setormb.usuarios}" var="usuario" converter="ConversorUsuario" 
+								itemValue="#{usuario}" itemLabel="#{usuario}" showSourceControls="true" showTargetControls="true">
+							<f:facet name="sourceCaption">Usuários disponíveis</f:facet>
+							<f:facet name="targetCaption">Usuários selecionados</f:facet>
+							<p:column style="width:75%;">
+								<h:outputText value="#{usuario.nome}" />
+							</p:column>
+						</p:pickList>
+						<p:message for="usuarios" errorClass="invalid" />
 					</p:panelGrid>
 					<p:commandButton id="gravar" action="#{setormb.gravar}"
 						value="Gravar" update="cadastro" ajax="false" />
@@ -54,13 +73,22 @@
 					<p:column headerText="Nome" width="35%" sortBy="#{setor.nome}">
 						<h:outputText value="#{setor.nome}" />
 					</p:column>
+					<p:column headerText="Setor Superior" width="35%" sortBy="#{setor.setorSuperior.nome}">
+						<h:outputText value="#{setor.setorSuperior.nome}" />
+					</p:column>
 					<p:column headerText="Comandos" width="20%">
 						<div align="center">
-							<p:commandLink id="editar" action="#{setormb.editar(setor.id)}"
-								value="Editar" update="pesquisa" ajax="false" />
+							<p:commandButton id="editar" icon="ui-icon-pencil" action="#{setormb.editar(setor.id)}"
+								title="Editar" update="pesquisa" ajax="false" />
 							<h:outputText value=" " />
-							<p:commandLink id="excluir" action="#{setormb.excluir(setor.id)}"
-								value="Excluir" update="pesquisa" ajax="false" />
+							<p:commandButton id="excluir" icon="ui-icon-trash" action="#{setormb.excluir(setor.id)}" title="Excluir" 
+								update="pesquisa" ajax="false" >
+								<p:confirm header="Confirmação" message="Você confirma a exclusão do setor #{setor.nome}?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
 						</div>
 					</p:column>
 				</p:dataTable>

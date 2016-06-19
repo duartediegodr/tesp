@@ -91,11 +91,17 @@
 					</p:column>
 					<p:column headerText="Comandos" width="20%">
 						<div align="center">
-							<p:commandLink id="editar" action="#{proponentemb.editar(proponente.id)}"
-								value="Editar" update="pesquisa" ajax="false" />
+							<p:commandButton id="editar" icon="ui-icon-pencil" action="#{proponentemb.editar(proponente.id)}"
+								title="Editar" update="pesquisa" ajax="false" />
 							<h:outputText value=" " />
-							<p:commandLink id="excluir" action="#{proponentemb.excluir(proponente.id)}"
-								value="Excluir" update="pesquisa" ajax="false" />
+							<p:commandButton id="excluir" icon="ui-icon-trash" action="#{proponentemb.excluir(proponente.id)}"
+								title="Excluir" update="pesquisa" ajax="false">
+								<p:confirm header="Confirmação" message="Você confirma a exclusão do Proponente #{proponente.nome}?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
 						</div>
 					</p:column>
 				</p:dataTable>
