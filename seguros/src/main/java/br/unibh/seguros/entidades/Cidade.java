@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.*;
@@ -15,6 +17,10 @@ import org.hibernate.validator.constraints.*;
 
 @Entity
 @Table(name="tb_cidade")
+@NamedQueries({
+	@NamedQuery(name="Cidade.findByName", 
+			query="select o from Cidade o where o.cidade like :nome")
+})
 public class Cidade implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Version

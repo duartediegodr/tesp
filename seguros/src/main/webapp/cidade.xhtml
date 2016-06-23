@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="cadastro">
+			<h:form id="cad" rendered="#{cidademb.cidade != null}">
+				<p:panel>
+					<h:outputText value="Cadastro de cidades"
+						style="font-size:18px;fontweight:bold" />
+					<p:messages />
+					<p:panelGrid columns="3" styleClass="ui-noborder">
+						<p:outputLabel value="Nome " />
+						<p:inputText id="nome" value="#{cidademb.cidade.cidade}"
+							size="100" />
+						<p:message for="nome" errorClass="invalid" />
+						<p:outputLabel value="Estado " />
+						<p:selectOneMenu id="estado" value="#{cidademb.cidade.estado}"
+							enableManualInput="true" defaultLabel="digite para filtrar"
+							style="width:125px" panelStyle="width:210px">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="Acre - AC" itemValue="AC" />
+							<f:selectItem itemLabel="Alagoas - AL" itemValue="AL" />
+							<f:selectItem itemLabel="Amapá - AP" itemValue="AP" />
+							<f:selectItem itemLabel="Amazonas - AM" itemValue="AM" />
+							<f:selectItem itemLabel="Bahia  - BA" itemValue="BA" />
+							<f:selectItem itemLabel="Ceará - CE" itemValue="CE" />
+							<f:selectItem itemLabel="Distrito Federal  - DF" itemValue="DF" />
+							<f:selectItem itemLabel="Espírito Santo - ES" itemValue="ES" />
+							<f:selectItem itemLabel="Goiás - GO" itemValue="GO" />
+							<f:selectItem itemLabel="Maranhão - MA" itemValue="MA" />
+							<f:selectItem itemLabel="Mato Grosso - MT" itemValue="MT" />
+							<f:selectItem itemLabel="Mato Grosso do Sul - MS" itemValue="MS" />
+							<f:selectItem itemLabel="Minas Gerais - MG" itemValue="MG" />
+							<f:selectItem itemLabel="Pará - PA" itemValue="PA" />
+							<f:selectItem itemLabel="Paraíba - PB" itemValue="PB" />
+							<f:selectItem itemLabel="Paraná - PR" itemValue="PR" />
+							<f:selectItem itemLabel="Pernambuco - PE" itemValue="PE" />
+							<f:selectItem itemLabel="Piauí - PI" itemValue="PI" />
+							<f:selectItem itemLabel="Rio de Janeiro - RJ" itemValue="RJ" />
+							<f:selectItem itemLabel="Rio Grande do Norte - RN" itemValue="RN" />
+							<f:selectItem itemLabel="Rio Grande do Sul - RS" itemValue="RS" />
+							<f:selectItem itemLabel="Rondônia - RO" itemValue="RO" />
+							<f:selectItem itemLabel="Roraima - RR" itemValue="RR" />
+							<f:selectItem itemLabel="Santa Catarina - SC" itemValue="SC" />
+							<f:selectItem itemLabel="São Paulo - SP" itemValue="SP" />
+							<f:selectItem itemLabel="Sergipe - SE" itemValue="SE" />
+							<f:selectItem itemLabel="Tocantins - TO" itemValue="TO" />
+						</p:selectOneMenu>
+						<p:message for="estado" errorClass="invalid" />
+					</p:panelGrid>
+					<p:commandButton id="gravar" action="#{cidademb.gravar}"
+						value="Gravar" update="cadastro,pesquisa" ajax="false" />
+					<p:commandButton id="cancelar" action="#{cidademb.cancelar}"
+						value="Cancelar" immediate="true" update="cadastro,pesquisa"
+						ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:panelGroup>
+		<p:panel id="pesquisa" rendered="#{cidademb.cidade == null}">
+			<h:outputText value="Lista de cidades"
+				style="font-size:18px;fontweight:bold" />
+			<p:messages />
+			<h:form id="arg">
+				<p:panelGrid columns="4" styleClass="ui-noborder">
+					<p:outputLabel value="Nome:" />
+					<p:inputText id="nomeArg" value="#{cidademb.nomeArg}" />
+					<p:commandButton id="pesquisar" action="#{cidademb.pesquisar}"
+						value="Pesquisar" update="pesquisa" ajax="false" />
+					<p:commandButton id="novo" action="#{cidademb.novo}" value="Novo"
+						update="pesquisa,cadastro" ajax="false" />
+				</p:panelGrid>
+			</h:form>
+			<h:panelGroup rendered="#{empty cidademb.lista}">
+				<h:outputText value="Nenhuma cidade existente" />
+			</h:panelGroup>
+			<h:form id="edt">
+				<p:dataTable id="tabela" var="cidade" value="#{cidademb.lista}"
+					rendered="#{not empty cidademb.lista}"
+					onrowclick="selectRow('#{cidade.id}')" paginator="true" rows="15">
+					<p:column headerText="Id" width="5%" sortBy="#{cidade.id}">
+						<div align="center">
+							<h:outputText value="#{cidade.id}" />
+						</div>
+					</p:column>
+					<p:column headerText="Nome" width="20%" sortBy="#{cidade.cidade}">
+						<h:outputText value="#{cidade.cidade}" />
+					</p:column>
+					<p:column headerText="Login" width="15%" sortBy="#{cidade.estado}">
+						<h:outputText value="#{cidade.estado}" />
+					</p:column>
+					<p:column headerText="Comandos" width="10%">
+						<div align="center">
+							<p:commandButton id="editar"
+								action="#{cidademb.editar(cidade.id)}" icon="ui-icon-pencil"
+								title="Editar" update="pesquisa" ajax="false" />
+							<p:commandLink id="excluir" action="#{cidademb.excluir(cidade.id)}" value="Excluir" update="pesquisa" ajax="false">
+								<p:confirm header="Confirmação"
+									message="Você confirma a exclusão a cidade #{cidade.cidade}?" icon="ui-icon-alert" />
+							</p:commandLink>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+								<p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</div>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
